@@ -23,6 +23,10 @@
 </head>
 
 <body>
+  <% for(let i=0;i<categories.length;i++){ %>
+            <%= categories[i] %>
+  <% } %>
+
   <div class="wrap">
     <div class="container-fluid">
       <div class="Header row">
@@ -40,7 +44,8 @@
         <div class="col-md-1 "></div>
         <a href="/company" class="col-md-2 ">О компании</a>
         <a href="/cooperation" class="col-md-2 ">Cотрудничество</a>
-        <a href="#" class="col-md-2 ">Каталог</a>
+        <a href="#" class="col-md-2 " id="catalog">Каталог</a>
+          
         <a href="#" class="col-md-2 ">Контакты</a>
         <a href="#" class="col-md-2 ">Где купить</a>
         <div class="col-md-1"></div>
