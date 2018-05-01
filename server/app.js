@@ -28,14 +28,12 @@ let categories = [];
 // SETUP ENDED
 
 app.get('*', (req, res, next) => {
-  // console.log(categories);
-  // console.log(req);
+  console.log("Клиент: "+req.url);
   next();
 });
 
 
 app.get('/', (req, res) => {
-  // нужно добавить категории
   res.render("index", { categories: categories });
 });
 
@@ -45,6 +43,10 @@ app.get('/company', (req, res) => {
 
 app.get('/cooperation', (req, res) => {
   res.render("index", { categories: categories });
+});
+
+app.get('/admin', (req, res) => {
+  res.render('admin');
 });
 
 app.get('/catalog/\*\/', (req, res) => {
@@ -61,7 +63,11 @@ app.get('/catalog/\*\/', (req, res) => {
 
       Product.find( { category: splitted[2] }, (err,result)=>{
         if(err || result.length==0){
-          res.render('404');
+          let error = {
+            code: 204,
+            message: "Контент не найден"
+          }
+          res.render('error', { error: error } );
         }else{
 
           res.render('catalog', { items: result } );
@@ -72,7 +78,11 @@ app.get('/catalog/\*\/', (req, res) => {
   // Открытая категория + товар (открыта страница товара)
     Product.find( { category: splitted[2], _id: splitted[3] } ,(err,result)=>{
         if (err || result.length == 0) {
-          res.render('404');
+          let error = {
+            code: 204,
+            message: "Контент не найден"
+          }
+          res.render('error', { error: error } );
         }else{
           res.render('catalog', { items: result } );
         }
@@ -80,12 +90,12 @@ app.get('/catalog/\*\/', (req, res) => {
       });
 
   }else{
-    res.send('404');
+    let error = {
+      code: 500,
+      message: "Внутренняя ошибка сервера"
+    }
+    res.send('error', { error: error });
   }
-
-  // Product.find( { category: splitted[2] } ,(err,result)=>{
-
-  // });
   
 });
 

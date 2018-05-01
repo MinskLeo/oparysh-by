@@ -96,6 +96,8 @@ html, body {
   top: 53px;
   right: 0;
   background: #000000de;
+  border-bottom-left-radius: 2px;
+  border-bottom-right-radius: 2px;
 }
 
 /*content wrap*/
