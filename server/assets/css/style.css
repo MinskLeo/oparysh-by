@@ -109,6 +109,6 @@ html, body {
   color: #ee13a9;
 }
 
-.Footer a:last-child {
+.Footer a:first-child {
   padding-left: 0px;
 }
