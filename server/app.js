@@ -12,10 +12,14 @@ app.use(express.static("assets"));
 const Product = mongoose.model('Product', { 
   name: String,
   image: String,
-  description: String
+  description: String,
+  price: Number,
+  category: String
  });
+
 const Category = mongoose.model('Category', {
-  name: String
+  name: String,
+  link: String
 });
 
 let categories = [];
@@ -24,7 +28,8 @@ let categories = [];
 // SETUP ENDED
 
 app.get('*', (req, res, next) => {
-  console.log(categories);
+  // console.log(categories);
+  // console.log(req);
   next();
 });
 
@@ -42,20 +47,60 @@ app.get('/cooperation', (req, res) => {
   res.render("index", { categories: categories });
 });
 
+app.get('/catalog/\*\/', (req, res) => {
+  let path = req.url;
+  let splitted = path.split('/');
+
+  // категория - [2]
+  // товар - [3]
+
+
+
+  // Открытая категория
+  if(splitted.length==3){
+
+      Product.find( { category: splitted[2] }, (err,result)=>{
+        if(err || result.length==0){
+          res.render('404');
+        }else{
+
+          res.render('catalog', { items: result } );
+        }
+      });
+
+  }else if(splitted.length==4){
+  // Открытая категория + товар (открыта страница товара)
+    Product.find( { category: splitted[2], _id: splitted[3] } ,(err,result)=>{
+        if (err || result.length == 0) {
+          res.render('404');
+        }else{
+          res.render('catalog', { items: result } );
+        }
+        
+      });
+
+  }else{
+    res.send('404');
+  }
+
+  // Product.find( { category: splitted[2] } ,(err,result)=>{
+
+  // });
+  
+});
 
 app.listen(8080,()=>{
-  Category.find( (err,result) => {
+  Category.find( {}, (err,result) => {
     if(err){
       console.log("Error! : "+err.message);
-    }else{
-      result.forEach( item => {
-        categories.push(item.name);
-      });
+    }else{      
+      categories = result;
     }
 
 
-  })
-  
+});
+
+
 
   console.log("oparysh.by has been started on: 8080");
 });

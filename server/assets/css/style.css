@@ -19,7 +19,6 @@ html, body {
 .Header {
   background-image: url(../images/header_bg.png);
   background-repeat: no-repeat;
-  background-attachment: fixed;
   background-position: center top;
   background-color: #000000;
   display: flex;
@@ -35,6 +34,8 @@ html, body {
   justify-content: center;
   align-items: center;
   background-color: #000000;
+  
+  position: relative;
 }
 
 .Nav_bar a {
@@ -42,8 +43,15 @@ html, body {
   color: #f2f2f2;
   text-align: center;
   padding: 14px 16px;
+
   text-decoration: none;
   font-size: 17px;
+  display: block;
+  width: 100%;
+}
+
+.Nav_bar div{
+  padding: 0;
 }
 
 .Nav_bar a:hover {
@@ -74,6 +82,20 @@ html, body {
   .M_nav_bar {
     display: block;
   }
+}
+
+#catalog:hover .drop_h {
+  display: block;
+}
+#catalog:hover .drop_h a:hover{
+  background: #000000;
+}
+.drop_h {
+  position: absolute;
+  display: none;
+  top: 53px;
+  right: 0;
+  background: #000000de;
 }
 
 /*content wrap*/
@@ -112,3 +134,5 @@ html, body {
 .Footer a:last-child {
   padding-left: 0px;
 }
+
+
