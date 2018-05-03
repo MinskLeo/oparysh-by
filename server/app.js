@@ -11,7 +11,7 @@ app.use(bodyParser.json());
 app.use(express.static("assets"));
 
 // Creating variables
-const Product = mongoose.model('Product', { 
+const Product = mongoose.model('Product', {
   name: String,
   image: String,
   description: String,
@@ -47,6 +47,16 @@ app.get('/cooperation', (req, res) => {
   res.render("index", { categories: categories });
 });
 
+<<<<<<< HEAD
+=======
+app.get('/catalog', (req, res) => {
+  res.render("catalog", { categories: categories });
+});
+
+app.get('/admin', (req, res) => {
+  res.render('admin');
+});
+>>>>>>> 2b95ec70b61e1b06300c54b92eac4cedd373d204
 
 app.get('/catalog/\*\/', (req, res) => {
   let path = req.url;
@@ -85,7 +95,7 @@ app.get('/catalog/\*\/', (req, res) => {
         }else{
           res.render('catalog', { items: result } );
         }
-        
+
       });
 
   }else{
@@ -95,7 +105,7 @@ app.get('/catalog/\*\/', (req, res) => {
     }
     res.send('error', { error: error });
   }
-  
+
 });
 
 app.get('/admin', (req, res) => {
@@ -111,7 +121,7 @@ app.listen(8080,()=>{
   Category.find( {}, (err,result) => {
     if(err){
       console.log("Error! : "+err.message);
-    }else{      
+    }else{
       categories = result;
     }
 

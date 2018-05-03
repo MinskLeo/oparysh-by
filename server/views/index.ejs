@@ -23,12 +23,12 @@
 </head>
 
 <body>
-  
+
 
   <div class="wrap">
     <div class="container-fluid">
       <div class="Header row">
-        <img src="/images/logo.png">
+        <a href="/"><img src="/images/logo.png"></a>
       </div>
 
       <div class="M_nav_bar row">
@@ -48,15 +48,15 @@
         <a href="#">Каталог</a>
         <div class="drop_h">
           <% for(let i=0;i<categories.length;i++){ %>
-            
+
               <a href= <%= ("/catalog/" + categories[i].link) %> ><%= categories[i].name %></a>
           <% } %>
-          
+
         </div>
       </div>
 
-       
-          
+
+
 
         <a href="#" class="col-md-2 ">Контакты</a>
         <a href="#" class="col-md-2 ">Где купить</a>
@@ -72,10 +72,10 @@
         <a href="#">
           <i class="fas fa-rss"></i>
         </a>
-        <a href="#">
+        <a href="mailto:info@oparysh.by">
           <i class="fas fa-envelope"></i>
         </a>
-        <a href="#">
+        <a href="https://vk.com/club126284612">
           <i class="fab fa-vk"></i>
         </a>
         <a href="#">
