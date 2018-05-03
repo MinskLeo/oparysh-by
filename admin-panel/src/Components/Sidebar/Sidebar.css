@@ -1,0 +1,45 @@
+.Sidebar{
+  position: fixed;
+  background: rgb(221, 221, 221);
+  width: 11%;
+  max-width: 11%;
+  overflow: hidden;
+  height: 100vh;
+  box-shadow: 1px 0 2px rgb(199, 199, 199);
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  flex-direction: column;
+}
+.hamburgerBlock{
+  margin-top: 30px;
+  padding-bottom: 30px;
+}
+.categories{
+  margin-top: 40px;
+}
+.Sidebar__block{
+  text-align: center;
+  width: 100%;
+}
+
+
+
+/* CATEGORIES */
+.categories__button{
+  width: 100%;
+  font-size: 20px;
+  padding: 10px 0;
+  border: none;
+  margin: 2px 0;
+  text-align: left;
+}
+.categories__button .fas,
+.categories__button .fab {
+  margin-right: 15px;
+  margin-left: 30px;
+}
+.categories__button:hover{
+  background: rgb(210, 210, 210);
+
+}

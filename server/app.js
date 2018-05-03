@@ -2,10 +2,12 @@
 const express = require("express");
 const app = express();
 const mongoose = require('mongoose');
+const bodyParser = require('body-parser');
 
 // Setting up some of them
 mongoose.connect('mongodb://localhost/oparysh');
 app.set("view engine", "ejs");
+app.use(bodyParser.json());
 app.use(express.static("assets"));
 
 // Creating variables
@@ -45,9 +47,6 @@ app.get('/cooperation', (req, res) => {
   res.render("index", { categories: categories });
 });
 
-app.get('/admin', (req, res) => {
-  res.render('admin');
-});
 
 app.get('/catalog/\*\/', (req, res) => {
   let path = req.url;
@@ -97,6 +96,15 @@ app.get('/catalog/\*\/', (req, res) => {
     res.send('error', { error: error });
   }
   
+});
+
+app.get('/admin', (req, res) => {
+  res.render('admin');
+});
+
+app.post('/admin/login', (req, res) => {
+  // console.log(req.body);
+  res.send("OK");
 });
 
 app.listen(8080,()=>{
