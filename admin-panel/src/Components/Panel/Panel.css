@@ -2,7 +2,13 @@
   width: 100vw;
   height: 100vh;
 }
-.Panel__contentPart{
-  width: 100%;
+.contentPart{
+  position: relative;
+  width: 100vw;
   height: 100%;
+  z-index: 0;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
 }

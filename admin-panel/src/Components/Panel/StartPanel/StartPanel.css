@@ -1,0 +1,12 @@
+.StartPanel{
+  width: 100%;
+}
+
+.StartPanel__block{
+  width: 100%;
+  font-size: 5rem;
+  padding-left: 15%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}

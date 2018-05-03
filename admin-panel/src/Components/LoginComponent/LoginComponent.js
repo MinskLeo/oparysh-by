@@ -37,12 +37,12 @@ class LoginComponent extends Component{
         
       }).catch( (error)=>{
         // [DEBUG] Исправить!
-        // this.setState({
-        //   redirect: <Redirect to="/admin/panel" />
-        // });
+        this.setState({
+          redirect: <Redirect to="/panel" />
+        });
 
-        this.LoginComponentContainer.style.opacity = 1;
-        alert("Что то пошло не так: "+error);
+        // this.LoginComponentContainer.style.opacity = 1;
+        // alert("Что то пошло не так: "+error);
       });
     }
     
