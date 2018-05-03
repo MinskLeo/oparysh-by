@@ -47,8 +47,6 @@ app.get('/cooperation', (req, res) => {
   res.render("index", { categories: categories });
 });
 
-<<<<<<< HEAD
-=======
 app.get('/catalog', (req, res) => {
   res.render("catalog", { categories: categories });
 });
@@ -56,7 +54,6 @@ app.get('/catalog', (req, res) => {
 app.get('/admin', (req, res) => {
   res.render('admin');
 });
->>>>>>> 2b95ec70b61e1b06300c54b92eac4cedd373d204
 
 app.get('/catalog/\*\/', (req, res) => {
   let path = req.url;
@@ -76,10 +73,9 @@ app.get('/catalog/\*\/', (req, res) => {
             code: 204,
             message: "Контент не найден"
           }
-          res.render('error', { error: error } );
+          res.render('error', { error: error, categories: categories } );
         }else{
-
-          res.render('catalog', { items: result } );
+          res.render('catalog', { items: result, categories: categories } );
         }
       });
 
@@ -91,9 +87,9 @@ app.get('/catalog/\*\/', (req, res) => {
             code: 204,
             message: "Контент не найден"
           }
-          res.render('error', { error: error } );
+          res.render('error', { error: error, categories: categories } );
         }else{
-          res.render('catalog', { items: result } );
+          res.render('catalog', { items: result, categories: categories } );
         }
 
       });
@@ -103,14 +99,11 @@ app.get('/catalog/\*\/', (req, res) => {
       code: 500,
       message: "Внутренняя ошибка сервера"
     }
-    res.send('error', { error: error });
+    res.render('error', { error: error, categories: categories } );
   }
 
 });
 
-app.get('/admin', (req, res) => {
-  res.render('admin');
-});
 
 app.post('/admin/login', (req, res) => {
   // console.log(req.body);
