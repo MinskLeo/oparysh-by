@@ -9,7 +9,7 @@ app.set("view engine", "ejs");
 app.use(express.static("assets"));
 
 // Creating variables
-const Product = mongoose.model('Product', { 
+const Product = mongoose.model('Product', {
   name: String,
   image: String,
   description: String,
@@ -43,6 +43,10 @@ app.get('/company', (req, res) => {
 
 app.get('/cooperation', (req, res) => {
   res.render("index", { categories: categories });
+});
+
+app.get('/catalog', (req, res) => {
+  res.render("catalog", { categories: categories });
 });
 
 app.get('/admin', (req, res) => {
@@ -86,7 +90,7 @@ app.get('/catalog/\*\/', (req, res) => {
         }else{
           res.render('catalog', { items: result } );
         }
-        
+
       });
 
   }else{
@@ -96,14 +100,14 @@ app.get('/catalog/\*\/', (req, res) => {
     }
     res.send('error', { error: error });
   }
-  
+
 });
 
 app.listen(8080,()=>{
   Category.find( {}, (err,result) => {
     if(err){
       console.log("Error! : "+err.message);
-    }else{      
+    }else{
       categories = result;
     }
 
