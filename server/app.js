@@ -110,6 +110,40 @@ app.post('/admin/login', (req, res) => {
   res.send("OK");
 });
 
+app.get('/admin/getcategories', (req, res) => {
+  let categories = null;
+  Category.find({}, (err, result) => {
+    if (err) {
+      console.log("Error! : " + err.message);
+    } else {
+      categories = result;
+    }
+  console.log(categories);
+  res.send(categories);
+
+  });
+});
+
+
+app.post('/admin/getcatalog', (req, res) => {
+  let category = req.body.category;
+  let products = null;
+
+  if(category)
+    Product.find({
+      category: category
+    },(err,result)=>{
+      if (err) {
+        console.log("Error! : " + err.message);
+      } else {
+        products = result;
+      }
+
+      res.send(products);
+    });
+});
+
+
 app.listen(8080,()=>{
   Category.find( {}, (err,result) => {
     if(err){

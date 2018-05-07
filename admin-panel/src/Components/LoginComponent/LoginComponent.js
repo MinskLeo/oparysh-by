@@ -25,7 +25,7 @@ class LoginComponent extends Component{
     }else {
 
       this.LoginComponentContainer.style.opacity=0;
-      axios.post('/admin/login',{
+      axios.post('http://localhost:8080/admin/login',{
         password: password,
         login: login
       }).then( (result)=>{

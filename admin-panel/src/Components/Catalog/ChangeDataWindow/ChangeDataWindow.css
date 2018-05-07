@@ -1,0 +1,119 @@
+.ChangeDataWindow{
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100vw;
+  height: 100vh;
+  /* background: rgba(238, 238, 238, 0.4); */
+  background: rgba(51, 51, 51, 0.466);
+  z-index: 1500;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+/* CLOSE */
+.closeWindow{
+  position: absolute;
+  top: 2%;
+  right: 2%;
+  font-size: 50px;
+
+}
+.closeWindow .fa-times{
+  color: #333;
+  transition: transform 100ms linear 0s;
+  cursor: pointer;
+}
+.closeWindow:hover .fa-times {
+  transform: scale(1.1);
+}
+/* END */
+
+
+/* DataContainer */
+.ChangeDataWindow__dataContainer{
+  position: relative;
+  width: 1000px;
+  min-height: 600px;
+  background: rgb(212, 212, 212);
+  /* border-radius: 20px; */
+  box-shadow: inset 5px 5px 2px rgb(153, 153, 153);
+
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  flex-direction: column;
+
+  padding: 30px;
+}
+.dataContainer__textField{
+  font-size: 25px;
+  margin: 15px;
+  width: 55%;
+  display: block;
+  border: none;
+  border-radius: 4px;
+  padding: 5px 10px;
+  outline: none;
+  background: #eee;
+}
+.dataContainer__select{
+  font-size: 20px;
+  margin: 10px 0;
+  margin-left: 20px;
+  min-width: 100px;
+  background: #eee;
+}
+.dataContainer__imageWrapper{
+  position: absolute;
+  width: 300px;
+  height: 400px;
+  right: 8%;
+  top: 20%;
+  background: #eee;
+  border-top-left-radius: 15px;
+  border-bottom-right-radius: 15px;
+  box-shadow: inset 2px 2px 2px rgb(153, 153, 153),
+              0 0 2px rgb(153, 153, 153);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  z-index: 0;
+}
+.imageWrapper__symbolWrapper {
+  font-size: 40px;
+  cursor: pointer;
+
+  transition: transform 100ms linear 0s;
+}
+.imageWrapper__symbolWrapper:hover {
+  transform: scale(1.1);
+}
+.imageWrapper__symbolWrapper-mask{
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  background: rgba(238, 238, 238, 0.466);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  z-index: 2600;
+  opacity: 0;
+}
+
+.imageWrapper__container-imageWrapper{
+  width: 100%;
+  height: 100%;
+  position: relative;
+  z-index: 0;
+}
+.imageWrapper__container-imageWrapper:hover .imageWrapper__symbolWrapper-mask {
+  opacity: 1;
+}
+.container-imageWrapper__image{
+  width: 100%;
+  height: 100%;
+}
