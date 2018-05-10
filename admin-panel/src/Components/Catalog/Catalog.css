@@ -54,3 +54,9 @@
 .cardmask__wrapper .fas:hover {
   transform: scale(1.1);
 }
+
+
+/* DEBUG */
+/* .contentPart{
+  transition: marginTop 500ms linear 0s;
+} */

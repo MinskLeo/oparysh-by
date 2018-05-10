@@ -2,7 +2,8 @@ import React, { Component } from "react";
 import "./Catalog.css";
 
 import Sidebar from "../Sidebar/Sidebar";
-import ChangeDataWindow from "./ChangeDataWindow/ChangeDataWindow";
+import NewChangeDataWindow from "./NewChangeDataWindow/NewChangeDataWindow";
+// import ChangeDataWindow from "./ChangeDataWindow/ChangeDataWindow";
 
 import axios from "axios";
 
@@ -16,7 +17,7 @@ class Catalog extends Component{
 
   componentDidMount = () => {
     // Title
-    document.title = "Категории"
+    document.title = "Каталог";
 
     // Categories
     axios.get('http://localhost:8080/admin/getcategories', {} ).then( (result) => {
@@ -44,7 +45,7 @@ class Catalog extends Component{
   OnItemClickChange = (index,e) => {
     this.setState({
       selectedProduct: this.state.items[index]
-    });
+    }); 
   }
 
   CloseDataWindowMethod = () => {
@@ -76,7 +77,7 @@ class Catalog extends Component{
 
                 <div className="cardmask">
                   <div className="cardmask__wrapper">
-                    <i className="fas fa-pencil-alt" onClick={this.OnItemClickChange.bind(this, index) }></i>
+                    <i className="fas fa-pencil-alt" onClick={this.OnItemClickChange.bind(this, index)}></i>
                     <i className="fas fa-trash-alt"></i>
                   </div>
                 </div>
@@ -95,31 +96,46 @@ class Catalog extends Component{
     }
 
     if(this.state.selectedProduct){
-      changeDataWindowRendered = <ChangeDataWindow item={this.state.selectedProduct} categories={this.state.categories} closeMethod={this.CloseDataWindowMethod} />
+      // changeDataWindowRendered = <ChangeDataWindow item={this.state.selectedProduct} categories={this.state.categories} closeMethod={this.CloseDataWindowMethod} />
+      changeDataWindowRendered = <NewChangeDataWindow item = {
+        this.state.selectedProduct
+      }
+      categories = {
+        this.state.categories
+      }
+      closeMethod = {
+        this.CloseDataWindowMethod
+      }
+      />
     }
 
     return(
-      <div className="row wrap">
+      <div>
         {changeDataWindowRendered}
-        <Sidebar></Sidebar>
+        <div className="row wrap">
 
-        <div className="col-md-8">
+          
+          <Sidebar></Sidebar>
 
-          <div className="row" style={ {height: "100vh"} }>
-            {itemsRendered}
+          <div className="col-md-8">
+
+            <div className="row" style={{ height: "100vh" }} ref={input=>{this.ContentPart = input}}>
+              {itemsRendered}
+            </div>
+
           </div>
 
+          <div className="col-md-2 Sidebar">
+            <ul className="Sidebar__catContainer">
+              <li className="catContainer__li"><button className="catContainer__button" onClick={this.OnCategoryClick.bind(this, "all")}>Весь каталог</button></li>
+              {categoriesRendered}
+            </ul>
+          </div>
+
+
         </div>
-
-        <div className="col-md-2 Sidebar">
-          <ul className="Sidebar__catContainer">
-            <li className="catContainer__li"><button className="catContainer__button" onClick={this.OnCategoryClick.bind(this, "all")}>Весь каталог</button></li>
-            {categoriesRendered}
-          </ul>
-        </div>
-
-
       </div>
+      
     );
   }
 }

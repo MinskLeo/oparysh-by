@@ -118,7 +118,6 @@ app.get('/admin/getcategories', (req, res) => {
     } else {
       categories = result;
     }
-  console.log(categories);
   res.send(categories);
 
   });
@@ -141,6 +140,33 @@ app.post('/admin/getcatalog', (req, res) => {
 
       res.send(products);
     });
+});
+
+app.post('/admin/delcategory', (req, res) => {
+  let resultObj = {
+    success: false
+  };
+
+  console.log("Delete route!");
+  if(req.body.id){
+    Category.find({ _id: req.body.id }).remove().exec( (err_delete) => {
+      if (!err_delete){
+        Category.find({},(err_find,result_find)=>{
+          if(!err_find){
+            resultObj = {
+              success: true,
+              categories: result_find
+            }
+            res.send(resultObj);
+          }else{
+            res.send(resultObj);
+          }
+        });
+      }else{
+        res.send(resultObj);
+      }
+    });
+  }
 });
 
 
