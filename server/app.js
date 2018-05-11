@@ -195,7 +195,6 @@ app.post('/admin/setcategory', (req, res) => {
             res.send(resultObj);
 
           } else {
-
             Category.find({}, (err3, result) => {
 
 
@@ -228,6 +227,43 @@ app.post('/admin/setcategory', (req, res) => {
     });
 
   }
+});
+
+app.post('/admin/newcategory', (req, res) => {
+  console.log("New Cat!");
+  let requestData = req.body;
+  let resultObj = {
+    success: false
+  };
+
+  console.log(requestData);
+
+  if(requestData){
+    const newCategory = new Category(requestData);
+    newCategory.save( (err1, product)=>{
+
+      if(!err1){
+        Category.find({},(err2,result) => {
+
+
+          if(!err2){
+            resultObj = {
+              success: true,
+              categories: result
+            }
+            res.send(resultObj);
+          }
+          
+          
+        });
+      }
+
+    });
+  }else{
+    res.send(resultObj);
+
+  }
+  
 });
 
 

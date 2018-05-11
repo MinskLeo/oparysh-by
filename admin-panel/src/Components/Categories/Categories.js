@@ -8,7 +8,11 @@ import Sidebar from "../Sidebar/Sidebar";
 class Categories extends Component{
   state = {
     categories: null,
-    selectedCategory: null,
+    selectedCategory: {
+      name: "Новая категория",
+      link: "",
+      description: ""
+    },
     selectedIndex: null,
     nextNew: true
   }
@@ -53,6 +57,7 @@ class Categories extends Component{
   }
 
   OnCategoryClick = (index, e) => {
+    console.log(this.state.categories);
     this.setState({
       selectedCategory: this.state.categories[index],
       nextNew: false,
@@ -62,7 +67,11 @@ class Categories extends Component{
   OnAddNewClick = () => {
     this.setState({
       nextNew: true,
-      selectedCategory: null
+      selectedCategory: {
+        name: "Новая категория",
+        link: "",
+        description:""
+      }
     });
   }
 
@@ -107,7 +116,11 @@ class Categories extends Component{
       if(result.data.success === true){
         this.setState({
           categories: result.data.categories,
-          selectedCategory: null,
+          selectedCategory: {
+            name: "Новая категория",
+            link: "",
+            description: ""
+          },
           selectedIndex: null,
           nextNew: true
         });
@@ -119,6 +132,7 @@ class Categories extends Component{
   }
 
   OnDeleteClick = (e) => {
+    console.log(this.state.selectedCategory);
     axios.post('http://localhost:8080/admin/delcategory', { id: this.state.categories[this.state.selectedIndex]["_id"] }).then((result) => {
       // {
       //    success: true | false,
@@ -128,7 +142,11 @@ class Categories extends Component{
       if (result.data.success === true) {
         this.setState({
           categories: result.data.categories,
-          selectedCategory: null,
+          selectedCategory: {
+            name: "Новая категория",
+            link: "",
+            description: ""
+          },
           selectedIndex: null,
           nextNew: true
         });
@@ -157,15 +175,15 @@ class Categories extends Component{
       }); 
     }
 
-    if(!this.state.nextNew){
-      categoryName = this.state.selectedCategory.name;
-      categoryLink = this.state.selectedCategory.link;
-      categoryDescription = this.state.selectedCategory.description;
-    }else{
-      categoryName = "Новая категория";
-      categoryLink = "";
-      categoryDescription = "";
-    }
+    // if(this.state.nextNew){
+    //   categoryName = "Новая категория";
+    //   categoryLink = "";
+    //   categoryDescription = "";
+    // }else{
+    //   categoryName = this.state.selectedCategory.name;
+    //   categoryLink = this.state.selectedCategory.link;
+    //   categoryDescription = this.state.selectedCategory.description;
+    // }
 
     return(
       <div className="row wrap">
@@ -198,11 +216,11 @@ class Categories extends Component{
                   </p>
 
                   <label htmlFor="name" className="categoriesChange__label">Название</label>
-                  <input type="text" placeholder="Название" id="name" className="categoriesChange__textinput" value={categoryName} onInput={this.OnNameInput}/>
+                  <input type="text" placeholder="Название" id="name" className="categoriesChange__textinput" value={this.state.selectedCategory.name} onInput={this.OnNameInput}/>
                   <label htmlFor="link" className="categoriesChange__label">Ссылка (англ. без пробелов и спец. симв.)</label>
-                  <input type="text" placeholder="Ссылка" id="link" className="categoriesChange__textinput" value={categoryLink} onInput={this.OnLinkInput}/>
+                  <input type="text" placeholder="Ссылка" id="link" className="categoriesChange__textinput" value={this.state.selectedCategory.link} onInput={this.OnLinkInput}/>
                   <label htmlFor="description" className="categoriesChange__label">Краткое описание</label>
-                  <textarea id="description" cols="30" rows="10" placeholder="Описание" className="categoriesChange__textinput" value={categoryDescription} onInput={this.OnDescriptionInput}></textarea>
+                  <textarea id="description" cols="30" rows="10" placeholder="Описание" className="categoriesChange__textinput" value={this.state.selectedCategory.description} onInput={this.OnDescriptionInput}></textarea>
                   <button className="categoriesChange__button delbtn" style={this.state.nextNew ? { display: "none" } : { display: "block" } } onClick={this.OnDeleteClick}>Удалить</button>
                   <button className="categoriesChange__button" onClick={this.OnSaveClick}>Сохранить</button>
                   
