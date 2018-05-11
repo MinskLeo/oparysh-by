@@ -67,39 +67,54 @@ class Categories extends Component{
   }
 
   OnSaveClick = (e) => {
+    console.log("70: Started!");
     let requestString = null;
     let requestObj = null;
 
     if(this.state.nextNew){
+      console.log("75: New");
       // Новая категория
       if(this.state.selectedCategory.name!=="" &&
         this.state.selectedCategory.link!=="" &&
         this.state.selectedCategory.description!==""){
+          console.log("80: ValidatedNew!");
 
-          requestString = "/admin/newcategory";
+          requestString = "http://localhost:8080/admin/newcategory";
           requestObj = {
-            name: this.state.name,
-            link: this.state.link,
-            description: this.state.description
+            name: this.state.selectedCategory.name,
+            link: this.state.selectedCategory.link,
+            description: this.state.selectedCategory.description
           };
+          console.log(requestString);
+          console.log(requestObj);
         }
       
     }else{
-      requestString = "/admin/setcategory";
+      console.log("93: SetValidated!");
+      requestString = "http://localhost:8080/admin/setcategory";
       requestObj = {
-        _id: this.state["_id"],
-        name: this.state.name,
-        link: this.state.link,
-        description: this.state.description
+        id: this.state.selectedCategory["_id"],
+        name: this.state.selectedCategory.name,
+        link: this.state.selectedCategory.link,
+        description: this.state.selectedCategory.description
       };
+      console.log(requestString);
+      console.log(requestObj);
     }
 
-    axios.post(requestString, {
-      
-    }).then( (result) => {
-    
+    axios.post(requestString, requestObj).then( (result) => {
+      console.log(result.data);
+      if(result.data.success === true){
+        this.setState({
+          categories: result.data.categories,
+          selectedCategory: null,
+          selectedIndex: null,
+          nextNew: true
+        });
+        console.log("Success! (saving)");
+      }
     }).catch( (error) => {
-    
+      console.log("Error! (saving)");
     });
   }
 

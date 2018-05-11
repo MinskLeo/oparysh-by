@@ -21,7 +21,8 @@ const Product = mongoose.model('Product', {
 
 const Category = mongoose.model('Category', {
   name: String,
-  link: String
+  link: String,
+  description: String
 });
 
 let categories = [];
@@ -166,6 +167,66 @@ app.post('/admin/delcategory', (req, res) => {
         res.send(resultObj);
       }
     });
+  }
+});
+
+app.post('/admin/setcategory', (req, res) => {
+  let requestData = req.body;
+  let resultObj = null;
+
+  if(requestData){
+
+    Category.findById(requestData.id, (err1,category)=>{
+      if(!err1){
+        category.set({
+          name: requestData.name,
+          link: requestData.link,
+          description: requestData.description
+        });
+
+
+        category.save((err2) => {
+          if (err2) {
+
+            console.log("Error with updating!");
+            resultObj = {
+              success: false
+            }
+            res.send(resultObj);
+
+          } else {
+
+            Category.find({}, (err3, result) => {
+
+
+              if (!err3) {
+                resultObj = {
+                  success: true,
+                  categories: result
+                }
+              }else{
+                resultObj = {
+                  success: false
+                }
+              }
+
+              res.send(resultObj);
+
+            });
+
+          }
+        });
+
+      }else{
+        console.log("Error! (updating)");
+        resultObj = {
+          success: false
+        }
+        res.send(resultObj);
+      }
+      
+    });
+
   }
 });
 

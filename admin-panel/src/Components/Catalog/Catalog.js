@@ -2,8 +2,8 @@ import React, { Component } from "react";
 import "./Catalog.css";
 
 import Sidebar from "../Sidebar/Sidebar";
-import NewChangeDataWindow from "./NewChangeDataWindow/NewChangeDataWindow";
-// import ChangeDataWindow from "./ChangeDataWindow/ChangeDataWindow";
+// import NewChangeDataWindow from "./NewChangeDataWindow/NewChangeDataWindow";
+import ChangeDataWindow from "./ChangeDataWindow/ChangeDataWindow";
 
 import axios from "axios";
 
@@ -97,7 +97,7 @@ class Catalog extends Component{
 
     if(this.state.selectedProduct){
       // changeDataWindowRendered = <ChangeDataWindow item={this.state.selectedProduct} categories={this.state.categories} closeMethod={this.CloseDataWindowMethod} />
-      changeDataWindowRendered = <NewChangeDataWindow item = {
+      changeDataWindowRendered = <ChangeDataWindow item = {
         this.state.selectedProduct
       }
       categories = {
