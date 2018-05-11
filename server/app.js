@@ -27,6 +27,17 @@ const Category = mongoose.model('Category', {
 
 let categories = [];
 
+// Выборка категорий. Использование:
+// CategoriesDatabaseSelection().then( (value)=>{} );
+const CategoriesDatabaseSelection = async () => {
+  let resultData = null;
+  await Category.find({},(err,result) => {
+    if(!err){
+      resultData = result;
+    }
+  });
+  return await resultData;
+}
 
 // SETUP ENDED
 
@@ -36,20 +47,33 @@ app.get('*', (req, res, next) => {
 });
 
 
-app.get('/', (req, res) => {
-  res.render("index", { categories: categories });
+app.get('/',  (req, res) => {
+  CategoriesDatabaseSelection().then( (value)=>{
+    res.render("index", { categories: value });
+  });
+
+  
 });
 
 app.get('/company', (req, res) => {
-  res.render("index", { categories: categories });
+   CategoriesDatabaseSelection().then( (value)=>{
+    res.render("index", { categories: value });
+  });
+  
 });
 
 app.get('/cooperation', (req, res) => {
-  res.render("index", { categories: categories });
+  CategoriesDatabaseSelection().then( (value)=>{
+    res.render("index", { categories: value });
+  });
+  
 });
 
 app.get('/catalog', (req, res) => {
-  res.render("catalog", { categories: categories });
+  CategoriesDatabaseSelection().then((value) => {
+    res.render("catalog", { categories: value });
+  });
+  
 });
 
 app.get('/admin', (req, res) => {
@@ -59,6 +83,10 @@ app.get('/admin', (req, res) => {
 app.get('/catalog/\*\/', (req, res) => {
   let path = req.url;
   let splitted = path.split('/');
+  let categoryInfo = {
+    name: null,
+    description: null
+  };
 
   // категория - [2]
   // товар - [3]
@@ -67,18 +95,37 @@ app.get('/catalog/\*\/', (req, res) => {
 
   // Открытая категория
   if(splitted.length==3){
-
-      Product.find( { category: splitted[2] }, (err,result)=>{
-        if(err || result.length==0){
-          let error = {
-            code: 204,
-            message: "Контент не найден"
-          }
-          res.render('error', { error: error, categories: categories } );
-        }else{
-          res.render('catalog', { items: result, categories: categories } );
+      Category.find({ link: splitted[2] },(error,category)=>{
+        console.log(category);
+        console.log("1. cat");
+        if(!error){
+          categoryInfo.name = category[0].name;
+          categoryInfo.description = category[0].description;
+          console.log("2. if");
         }
+
+        Product.find({ category: splitted[2] }, (err, result) => {
+          console.log("3. product");
+          if (err || result.length == 0) {
+            let error = {
+              code: 204,
+              message: "Контент не найден"
+            }
+            CategoriesDatabaseSelection().then((value) => {
+              res.render('error', { error: error, categories: value });
+            });
+          } else {
+            CategoriesDatabaseSelection().then((value) => {
+              console.log("4. render");
+              res.render('catalog', { items: result, categories: value, categoryInfo: categoryInfo });
+            });
+          }
+        });
+
+
       });
+
+      
 
   }else if(splitted.length==4){
   // Открытая категория + товар (открыта страница товара)
@@ -88,9 +135,14 @@ app.get('/catalog/\*\/', (req, res) => {
             code: 204,
             message: "Контент не найден"
           }
-          res.render('error', { error: error, categories: categories } );
+          CategoriesDatabaseSelection().then((value) => {
+            res.render('error', { error: error, categories: value } );
+          });
         }else{
-          res.render('catalog', { items: result, categories: categories } );
+          CategoriesDatabaseSelection().then((value) => {
+            console.log(result);
+            res.render('productview', { product: result[0], categories: value } );
+          });
         }
 
       });
@@ -100,7 +152,9 @@ app.get('/catalog/\*\/', (req, res) => {
       code: 500,
       message: "Внутренняя ошибка сервера"
     }
-    res.render('error', { error: error, categories: categories } );
+    CategoriesDatabaseSelection().then((value) => {
+      res.render('error', { error: error, categories: value } );
+    });
   }
 
 });
@@ -253,7 +307,7 @@ app.post('/admin/newcategory', (req, res) => {
             }
             res.send(resultObj);
           }
-          
+
           
         });
       }
@@ -268,17 +322,5 @@ app.post('/admin/newcategory', (req, res) => {
 
 
 app.listen(8080,()=>{
-  Category.find( {}, (err,result) => {
-    if(err){
-      console.log("Error! : "+err.message);
-    }else{
-      categories = result;
-    }
-
-
-});
-
-
-
   console.log("oparysh.by has been started on: 8080");
 });

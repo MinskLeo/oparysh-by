@@ -103,7 +103,25 @@ html, body {
 }
 
 /*content wrap*/
+.categoryDescription__column{
+  padding: 20px 0;
 
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.categoryDescription__column h3{
+  font-size: 30px;
+  margin-top: 20px;
+  color: rgb(173, 10, 173);
+}
+.categoryDescription__column p{
+  font-size: 25px;
+}
+.categoryDescription__hr{
+  width: 90%;
+}
 .Content {
   padding: 0 100px;
   padding-top: 50px;
@@ -121,10 +139,48 @@ color: #ee13a9;
 }
 
 
+/* CardMask */
+.overCard {
+  position: relative;
+  z-index: 50001;
+}
+.cardMask{
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  z-index: 2000;
+  background: rgba(238, 238, 238, 0.466);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+  cursor: pointer;
+
+  transition: opacity 200ms ease-in-out 0s;
+}
+.price::after{
+  content: "  руб.\\кг";
+}
+.cardMask__text{
+  font-size: 50px;
+}
+.cardMask__link{
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background: transparent;
+}
+.cardMaskHandler:hover .cardMask{
+  opacity: 1;
+}
+
+
 /*footer*/
 
 .Footer {
-  position: absolute;
+  /* position: absolute; */
   left: 0;
   bottom: 0;
   width: 100%;
@@ -150,4 +206,31 @@ color: #ee13a9;
 
 .Footer a:last-child {
   padding-left: 0px;
+}
+
+
+
+
+
+/* ProductView style */
+.preInfo{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+.preInfo h3{
+  font-size: 40px;
+}
+.preInfo h3::after{
+  content: "  руб.\\кг";
+}
+.contentpart-name{
+  padding: 30px 0;
+  padding-top: 50px;
+  color: rgb(175, 10, 175);
+}
+.contentpart-description{
+  padding: 30px 0;
+  font-size: 22px;
 }

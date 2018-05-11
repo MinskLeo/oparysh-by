@@ -212,7 +212,7 @@ class Categories extends Component{
                 <div className="categoriesChange">
 
                   <p className="categoryLogo" style={this.state.nextNew ? { color: "rgb(8, 160, 160)" } : { color: "#333" } }>
-                    {categoryName  ? categoryName : null}
+                    {this.state.selectedCategory.name}
                   </p>
 
                   <label htmlFor="name" className="categoriesChange__label">Название</label>
