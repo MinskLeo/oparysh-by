@@ -58,13 +58,82 @@
 
 
 
-        <a href="#" class="col-md-2 ">Контакты</a>
-        <a href="#" class="col-md-2 ">Где купить</a>
+        <a href="/contacts" class="col-md-2 ">Контакты</a>
+        <a href="/buy" class="col-md-2 ">Где купить</a>
         <div class="col-md-1"></div>
       </div>
 
-      <div class="Content row">
+
+      <div class="container">
+        <!-- title -->
+        <div class="row">
+            <div class="col-md-12">
+              <h1 class="text-center feedbackForm__title">Где купить</h1>
+            </div>
+        </div>
+        
+        <!-- description -->
+        <div class="row">
+            <div class="col-md-12">
+              <p class="text-center feedbackForm__text">Купить нашу продукцию можно во многих магазинах. Доставка по всей Беларуси</p>
+            </div>
+        </div>
+
+        <!-- OR -->
+        <div class="row">
+            <div class="col-md-12">
+              <p class="text-center feedbackForm__text feedbackForm__text-big" style="color: rgb(173,10,173);">ИЛИ</p>
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-md-12">
+              <p class="text-center feedbackForm__text">Вы можете воспользоваться формой ниже и мы Вам сами перезвоним!</p>
+            </div>
+        </div>
+
+        <!-- form -->  
+          <div class="row feedbackForm">
+            <div class="col-md-12">
+
+            <div class="input-group">
+                <div class="input-group-prepend">
+                  <label for="formName" class="input-group-text">Имя</label>
+                </div>
+                <input type="text" id="formName" class="form-control" placeholder="напр. Андрей">
+            </div>
+
+            <div class="input-group">
+                <div class="input-group-prepend">
+                  <label for="formPhone" class="input-group-text">Телефон</label>
+                </div>
+                <input type="text" id="formPhone" class="form-control" placeholder="напр. +375296655275">
+            </div>
+
+              <!-- <input type="text" id="formName" class="form-control" placeholder="Имя"> -->
+
+              <!-- <input type="text" class="form-control" placeholder="Телефон"> -->
+
+              <div class="input-group">
+                <div class="input-group-prepend">
+                  <label for="formEmail" class="input-group-text">Email</label>
+                </div>
+                <input type="text" class="form-control" id="formEmail" placeholder="напр. oparysh@opop.by">
+              </div>
+              
+              <div class="form-group">
+                <label for="formTextArea1">Сообщение (не обязательно)</label>
+                <textarea class="form-control" id="formTextArea1" rows="3" autocomplete="false"></textarea>
+              </div>
+            </div>
+
+            <button class="feedbackForm__button-submit-purple">Отправить</button>
+        </div>
+        
+        
+        
       </div>
+      
 
     </div>
     <div class="Footer row">

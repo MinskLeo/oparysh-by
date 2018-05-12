@@ -234,3 +234,46 @@ color: #ee13a9;
   padding: 30px 0;
   font-size: 22px;
 }
+
+
+/* FeedBack Form Styling */
+.feedbackForm__title{
+  margin-top: 20px;
+}
+.feedbackForm__text{
+  font-size: 22px;
+  margin: 20px 0;
+}
+.feedbackForm__text-big{
+  font-size: 30px;
+  font-weight: bold;
+}
+
+.feedbackForm{
+  max-width: 500px;
+  margin: auto;
+}
+.feedbackForm__button-submit-purple {
+  position: relative;
+  padding: 5px 20px;
+  background: rgb(173, 10, 173);
+  border: none;
+  border-radius: 1px;
+  display: block;
+  margin: auto;
+  margin-bottom: 50px;
+  box-shadow: 7px 7px 2px rgb(95, 7, 95);
+  cursor: pointer;
+  outline: none !important;
+  color: #eee;
+  top: 0;
+  left: 0;
+
+  transition: all 70ms linear 0s;
+}
+.feedbackForm__button-submit-purple:active {
+  background: rgb(130, 10, 130);
+  top: 4px;
+  left: 4px;
+  box-shadow: 3px 3px 2px rgb(95, 7, 95);
+}

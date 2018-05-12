@@ -64,7 +64,7 @@ app.get('/company', (req, res) => {
 
 app.get('/cooperation', (req, res) => {
   CategoriesDatabaseSelection().then( (value)=>{
-    res.render("index", { categories: value });
+    res.render("cooperation", { categories: value });
   });
   
 });
@@ -74,6 +74,18 @@ app.get('/catalog', (req, res) => {
     res.render("catalog", { categories: value });
   });
   
+});
+
+app.get('/contacts', (req, res) => {
+  CategoriesDatabaseSelection().then((value) => {
+    res.render("contacts", { categories: value });
+  });
+});
+
+app.get('/buy', (req, res) => {
+  CategoriesDatabaseSelection().then((value) => {
+    res.render("wheretobuy", { categories: value });
+  });
 });
 
 app.get('/admin', (req, res) => {
