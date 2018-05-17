@@ -1,0 +1,41 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+.dark {
+  background-color: #1d1d1d;
+}
+
+.light {
+  background-color: #eee;
+  padding-top: 20px;
+}
+
+.row {
+  width: 100vw;
+  height: 100vh;
+  margin: 0px;
+}
+
+.img_pick {
+  width: 100px;
+  height: 100px;
+}
+
+.form-control {
+  border-radius: 0;
+  outline-color: #9a9a9a;
+}
+
+.save_btn {
+  background-color: #0a9475;
+  width: 100%;
+  border-radius: 0px;
+}
+
+.delete_btn {
+  background-color: #c20e0e;
+  width: 100%;
+  border-radius: 0px;
+}

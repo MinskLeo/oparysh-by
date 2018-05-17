@@ -4,6 +4,28 @@ const app = express();
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 
+var multer = require('multer');
+var storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, './ProductImages')
+  },
+  filename: function (req, file, cb) {
+
+    let extension = file.originalname.split('.');
+    extension = extension[extension.length-1];
+
+    let id = Math.random().toString(36).substr(2, 9);
+    cb(null, id+"."+extension);
+  }
+})
+
+// var upload = multer({
+//   dest: 'ProductImages/'
+// })
+var upload = multer({
+  storage: storage
+})
+
 // Setting up some of them
 mongoose.connect('mongodb://localhost/oparysh');
 app.set("view engine", "ejs");
@@ -330,6 +352,24 @@ app.post('/admin/newcategory', (req, res) => {
 
   }
   
+});
+
+
+app.post('/admin/setproduct',(req, res) => {
+  console.log(req.body);
+  res.send({
+    status:"OK"
+  });
+});
+
+app.post('/admin/setproductfile', upload.single('file'), (req, res) => {
+  console.log("================================");
+  console.log(req.file);
+  req.file.filename = req.file.originalname;
+  req.file
+  console.log("================================");
+  console.log(req.body.id);
+  res.send(null);
 });
 
 

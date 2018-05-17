@@ -11,8 +11,8 @@ class Catalog extends Component{
   state = {
     categories: null,
     items: null,
-    isChangeDataWindow: false,
-    selectedProduct: null
+    selectedProduct: null,
+    selectedCategory: null
   }
 
   componentDidMount = () => {
@@ -29,14 +29,14 @@ class Catalog extends Component{
     });
   }
 
-  OnCategoryClick = (link,e) => {
+  OnCategoryClick = (link,name,e) => {
     axios.post('http://localhost:8080/admin/getcatalog', {
       category: link
     }).then( (result) => {
       this.setState({
-        items: result.data
+        items: result.data,
+        selectedCategory: name
       })
-      console.log(result.data);
     }).catch( (error) => {
       alert('Error!');
     });
@@ -63,7 +63,7 @@ class Catalog extends Component{
     if(this.state.categories){
       categoriesRendered =  this.state.categories.map( (item)=>{
         return (
-          <li className="catContainer__li" key={item.link}><button className="catContainer__button" onClick={this.OnCategoryClick.bind(this, item.link)}>{item.name}</button></li>
+          <li className="catContainer__li" key={item.link}><button className="catContainer__button" onClick={this.OnCategoryClick.bind(this, item.link, item.name)}>{item.name}</button></li>
         );
       });
     }
@@ -105,6 +105,9 @@ class Catalog extends Component{
       }
       closeMethod = {
         this.CloseDataWindowMethod
+      } 
+      selectedCategory = {
+        this.state.selectedCategory
       }
       />
     }
