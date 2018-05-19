@@ -11,6 +11,7 @@ class Sidebar extends Component{
             <ul className="Sidebar__catContainer">
               <li className="catContainer__li"><Link className="catContainer__button" to="/panel/catalog">Каталог</Link></li>
               <li className="catContainer__li"><Link className="catContainer__button" to="/panel/categories">Категории</Link></li>
+              <li className="catContainer__li"><Link className="catContainer__button" to="/panel/formdata">Данные форм</Link></li>
             </ul>
 
           </div>

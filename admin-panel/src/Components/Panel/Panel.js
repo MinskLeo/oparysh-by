@@ -24,6 +24,11 @@ class Panel extends Component{
             <p className="block__description">Добавление, изменение, удаление категорий товара</p>
           </Link>
 
+          <Link className="contentPart__block" to="/panel/formdata">
+            <h2 className="block__title">Данные форм</h2>
+            <p className="block__description">Контроль данных форм, изменение статуса, удаление заказа</p>
+          </Link>
+
         </div>
       </div>
     );

@@ -4,6 +4,7 @@ const app = express();
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 
+// Multer
 var multer = require('multer');
 var storage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -46,6 +47,15 @@ const Category = mongoose.model('Category', {
   link: String,
   description: String
 });
+
+const FormData = mongoose.model('FormData',{
+  name: String,
+  phone: String,
+  email: String,
+  message: String,
+  dateOfReg: Date,
+  dateFinal: Date
+})
 
 let categories = [];
 
@@ -371,6 +381,26 @@ app.post('/admin/setproductfile', upload.single('file'), (req, res) => {
   console.log(req.body.id);
   res.send(null);
 });
+
+app.post('/admin/getformdata', (req, res) => {
+  FormData.find({},(err,result)=>{
+    if(!err){
+      res.send(result);
+    }else{
+      res.send(null);
+    }
+  })
+});
+
+// let abc = new FormData({
+//     name: "Андрей",
+//     phone: "+375296655275",
+//     email: "2119930@gmail.com",
+//     message: "Побыстрее пожалуйста",
+//     dateOfReg: Date.now(),
+//     dateFinal: null
+// });
+// abc.save();
 
 
 app.listen(8080,()=>{
