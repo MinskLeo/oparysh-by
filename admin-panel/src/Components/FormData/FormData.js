@@ -18,9 +18,13 @@ class FormData extends Component{
   }
 
   componentWillMount = () => {
-    axios.get('http://localhost:8080/admin/getformdatapages', {}).then( (result) => {
+    axios.post('http://localhost:8080/admin/getformdatapages', {
+      done: this.state.donePressed,
+      opened: this.state.openedPressed,
+      canceled: this.state.canceledPressed
+    }).then( (result) => {
       this.setState({
-        pagesCount: result.data.availablePages
+        pagesCount: result.data.availablePages,
       });
     }).catch( (error) => {
       alert("Error!");
@@ -47,7 +51,7 @@ class FormData extends Component{
       type: type,
       done: this.state.donePressed,
       opened: this.state.openedPressed,
-      canceled: this.state.canceledPressed
+      canceled: this.state.canceledPressed,
 
     }).then( (result) => {
       this.setState({
@@ -133,6 +137,14 @@ class FormData extends Component{
       });
       console.log(result.data);
     }).catch( (error) => {
+      alert("Error!");
+    });
+
+    axios.post('http://localhost:8080/admin/getformdatapages', requestObject).then((result) => {
+      this.setState({
+        pagesCount: result.data.availablePages,
+      });
+    }).catch((error) => {
       alert("Error!");
     });
   }

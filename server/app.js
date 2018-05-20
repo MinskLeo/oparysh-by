@@ -458,7 +458,7 @@ app.post('/admin/setformdata', (req, res) => {
   
 });
 
-app.get('/admin/getformdatapages', (req, res) => {
+app.post('/admin/getformdatapages', (req, res) => {
   // Statuses check
   let searchArray = [];
   if (req.body.done) {
@@ -478,7 +478,7 @@ app.get('/admin/getformdatapages', (req, res) => {
 
   let itemsPerPage = 15;
   let availablePages = null;
-  FormData.find({},(err,result)=>{
+  FormData.find({...searchObject},(err,result)=>{
     if(!err){
       availablePages = Math.ceil(result.length / itemsPerPage);
     }

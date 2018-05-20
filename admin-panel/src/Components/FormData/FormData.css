@@ -165,7 +165,8 @@
 .page{
   font-size: 20px;
   color: #eee;
-  background: rgb(91, 91, 253);
+  /* rgb(91, 91, 253) */
+  background: #333;
   margin: 0 10px;
   padding: 5px 15px;
   box-shadow: 0 0 2px rgb(36, 36, 245);
@@ -173,5 +174,6 @@
   cursor: pointer;
 }
 .page:hover{
-  background: rgb(64, 64, 252);
+  /* rgb(64, 64, 252) */
+  background: rgb(83, 83, 83);
 }
