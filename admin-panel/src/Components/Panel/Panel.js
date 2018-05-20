@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import "./Panel.css";
 
-import Sidebar from "../Sidebar/Sidebar";
 import { Link } from 'react-router-dom'
 
 class Panel extends Component{

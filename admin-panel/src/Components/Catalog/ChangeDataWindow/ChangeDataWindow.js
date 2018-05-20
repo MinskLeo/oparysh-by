@@ -55,7 +55,7 @@ class ChangeDataWindow extends Component{
     }
     
     axios.post('http://localhost:8080/admin/setproduct', {...objectToSend}).then( (result) => {
-      if(result.status=="OK"){
+      if(result.status==="OK"){
         alert("OK!");
       }else{
         alert("Error! 1");

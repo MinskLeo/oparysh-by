@@ -8,146 +8,142 @@ import Sidebar from "../Sidebar/Sidebar";
 class FormData extends Component{
   state = {
     items: null,
-    selectedType: "today",
-    pagesCount: null,
+    pages: null,
 
-
-    donePressed: true,
+    openedPressed: true,
     canceledPressed: true,
-    openedPressed: true
+    donePressed: true,
+    selectedType: "today",
+    currentPage: 1
   }
 
   componentWillMount = () => {
-    axios.post('http://localhost:8080/admin/getformdatapages', {
-      done: this.state.donePressed,
-      opened: this.state.openedPressed,
-      canceled: this.state.canceledPressed
-    }).then( (result) => {
-      this.setState({
-        pagesCount: result.data.availablePages,
-      });
-    }).catch( (error) => {
-      alert("Error!");
-    });
-
-    axios.post('http://localhost:8080/admin/getformdata', {
-      type: this.state.selectedType,
-      done: this.state.donePressed,
-      opened: this.state.openedPressed,
-      canceled: this.state.canceledPressed
-
-    }).then((result) => {
-      this.setState({
-        items: result.data
-      });
-      console.log(result.data);
-    }).catch((error) => {
-      alert("Error!");
-    });
-  }
-
-  OnTypeSelectionChange = (type,e) => {
-    axios.post('http://localhost:8080/admin/getformdata', {
-      type: type,
-      done: this.state.donePressed,
+    let requestObject = {
       opened: this.state.openedPressed,
       canceled: this.state.canceledPressed,
+      done: this.state.donePressed,
+      type: this.state.selectedType,
+      page: this.state.currentPage
+    }
 
-    }).then( (result) => {
-      this.setState({
-        items: result.data,
-        selectedType: type
-      });
-      console.log(result.data);
-    }).catch( (error) => {
-      alert("Error!");
+    axios.post('http://localhost:8080/admin/getformdata', requestObject).then((result) => {
+      if (result.data.pages != 0 && result.data.pages < this.state.currentPage) {
+        this.setState({
+          items: result.data.items,
+          pages: result.data.pages,
+          currentPage: 1
+        });
+      } else {
+        this.setState({
+          items: result.data.items,
+          pages: result.data.pages,
+          currentPage: 1
+        });
+      }
+
+
+    }).catch((error) => {
+      console.log("Error! ajax");
     });
-    
   }
 
-  SortByStatus = (selectedStatus, e) => {
-    let requestObject = null;
-    let btn = null;
+  StatusSortChangeButtons = (button, e) => {
+    let btn;
+    // Формирование объекта запроса
+    let requestObject = {
+      opened: this.state.openedPressed,
+      canceled: this.state.canceledPressed,
+      done: this.state.donePressed,
+      type: this.state.selectedType,
+      page: this.state.currentPage
+    };
 
-    switch (selectedStatus) {
-       case "opened":
-        btn = this.state.openedPressed;
-
-        requestObject = {
-          opened: !btn,
-          canceled: this.state.canceledPressed,
-          done: this.state.donePressed
-        }
+    switch (button) {
+      case "opened":
+      btn = this.state.openedPressed;
         this.setState({
           openedPressed: !btn
         });
-
-
-        e.target.classList.toggle("toggleBtn-opened");
-        break;
-
-
-
-      case "done":
-      btn = this.state.donePressed;
-
-      requestObject = {
-        opened: this.state.openedPressed,
-        canceled: this.state.canceledPressed,
-        done: !btn
-      }
-
-      this.setState({
-        donePressed: !btn
-      });
-
-        
-      e.target.classList.toggle("toggleBtn-done");
+        requestObject.opened=!requestObject.opened;
       break;
 
-
-
-
-
-
-     
       case "canceled":
-        btn = this.state.canceledPressed;
-
-        requestObject = {
-          opened: this.state.donePressed,
-          canceled: !btn,
-          done: this.state.donePressed
-        }
+      btn = this.state.canceledPressed;
         this.setState({
           canceledPressed: !btn
         });
+        requestObject.canceled=!requestObject.canceled;
+      break;
 
-        
-        e.target.classList.toggle("toggleBtn-canceled");
-        break;
+      case "done":
+      btn = this.state.donePressed;
+        this.setState({
+          donePressed: !btn
+        });
+        requestObject.done=!requestObject.done;
+      break;
+      default: break;
     }
     
-    
-    console.log(requestObject);
 
+    // Отправка запроса
     axios.post('http://localhost:8080/admin/getformdata', requestObject).then((result) => {
-      this.setState({
-        items: result.data
-      });
-      console.log(result.data);
-    }).catch( (error) => {
-      alert("Error!");
-    });
+    console.log(requestObject);
+      if (result.data.pages!=0 && result.data.pages < this.state.currentPage) {
+        this.setState({
+          items: result.data.items,
+          pages: result.data.pages,
+          currentPage: result.data.items.length
+        });
+      }else{
+        this.setState({
+          items: result.data.items,
+          pages: result.data.pages
+        });
+      }
+      
 
-    axios.post('http://localhost:8080/admin/getformdatapages', requestObject).then((result) => {
-      this.setState({
-        pagesCount: result.data.availablePages,
-      });
     }).catch((error) => {
-      alert("Error!");
+      console.log("Error! ajax");
     });
   }
+
+  OnTypeSelectionChange = (type, e) => {
+    this.setState({
+      selectedType: type
+    });
+
+    let requestObject = {
+      opened: this.state.openedPressed,
+      canceled: this.state.canceledPressed,
+      done: this.state.donePressed,
+      type: type,
+      page: 1
+    }
+
+    axios.post('http://localhost:8080/admin/getformdata', requestObject).then((result) => {
+      if (result.data.pages != 0 && result.data.pages < this.state.currentPage) {
+        this.setState({
+          items: result.data.items,
+          pages: result.data.pages,
+          currentPage: 1
+        });
+      } else {
+        this.setState({
+          items: result.data.items,
+          pages: 1
+        });
+      }
+
+
+    }).catch((error) => {
+      console.log("Error! ajax");
+    });
+
+  }
+
+  
+
 
   ChangeBlockStatus = (status,id,index,e) => {
     axios.post('http://localhost:8080/admin/setformdata', {
@@ -169,27 +165,34 @@ class FormData extends Component{
 
   }
 
-  OnPageClick = (page,e) => {
-    axios.post('http://localhost:8080/admin/getformdata', {
-      opened: this.state.donePressed,
+  PageChangeEvent = (page, e) => {
+      let requestObject = {
+      opened: this.state.openedPressed,
       canceled: this.state.canceledPressed,
       done: this.state.donePressed,
-      page: page,
-      type: this.state.selectedType
-    }).then( (result) => {  
+      type: this.state.selectedType,
+      page: page
+    }
+
+    axios.post('http://localhost:8080/admin/getformdata', requestObject).then((result) => {
       this.setState({
-        items: result.data
-      })
-    }).catch( (error) => {
-      alert("Error!");
+        items: result.data.items,
+        pages: result.data.pages,
+        currentPage: page
+      });
+    }).catch((error) => {
+      console.log("Error! ajax");
     });
   }
 
+
+
   render(){
     let blocksRendered = null;
-    if(this.state.items){
-      blocksRendered = this.state.items.map( (item,index) =>{
+    let pagesRendered = null;
 
+    if(this.state.items){
+        blocksRendered = this.state.items.map((item, index) => {
         let typeProperty = null;
         switch (item.status) {
           case "done":
@@ -201,6 +204,7 @@ class FormData extends Component{
           case "canceled":
             typeProperty = "FormDataBock__tape bg-danger";
           break;
+          default: break;
         }
         return(
           <div className="col-md-12 FormDataContentPart__FormDataBock" key={item["_id"]}>
@@ -210,24 +214,25 @@ class FormData extends Component{
               <p>{item.email}</p>
               <p>{item.message}</p>
               <ul className="ChangeType">
-                <li className="ChangeType__changer"><button className="FormDataStatusContainer__status FormDataStatusContainer__status-red" onClick={this.ChangeBlockStatus.bind(this,"canceled",item["_id"],index)}>Отменен</button> </li>
-                <li className="ChangeType__changer"><button className="FormDataStatusContainer__status FormDataStatusContainer__status-yellow" onClick={this.ChangeBlockStatus.bind(this,"opened",item["_id"],index)}>Открыт</button> </li>
-                <li className="ChangeType__changer"><button className="FormDataStatusContainer__status FormDataStatusContainer__status-green" onClick={this.ChangeBlockStatus.bind(this,"done",item["_id"],index)}>Завершен</button> </li>
+                <li className="ChangeType__changer"><button className="FormDataStatusContainer__status FormDataStatusContainer__status-red" onClick={this.ChangeBlockStatus.bind(this,"canceled")}>Отменен</button> </li>
+                <li className="ChangeType__changer"><button className="FormDataStatusContainer__status FormDataStatusContainer__status-yellow" onClick={this.ChangeBlockStatus.bind(this,"opened")}>Открыт</button> </li>
+                <li className="ChangeType__changer"><button className="FormDataStatusContainer__status FormDataStatusContainer__status-green" onClick={this.ChangeBlockStatus.bind(this,"done")}>Завершен</button> </li>
               </ul>
           </div>
         );
       });
-    }
 
-    let pagesRendered = null;
-    if(this.state.pagesCount){
+    }
+        
+
+    if(this.state.pages){
       let pagesArray = [];
-      for(let i=0;i<this.state.pagesCount;i++){
+      for(let i=0;i<this.state.pages;i++){
         pagesArray.push(i+1);
       }
       pagesRendered = pagesArray.map((item, index) => {
           return (
-            <div className="page" onClick={this.OnPageClick.bind(this,item)}>{item}</div>
+            <div className="page" onClick={this.PageChangeEvent.bind(this,item)}>{item}</div>
           );
       });
     }
@@ -240,13 +245,13 @@ class FormData extends Component{
         
         <div className="FormData">
           <div className="row FormDataStatusContainer">
-            <button className="FormDataStatusContainer__status FormDataStatusContainer__status-yellow toggleBtn-opened" onClick={this.SortByStatus.bind(this,"opened")}>
+            <button className="FormDataStatusContainer__status FormDataStatusContainer__status-yellow toggleBtn-opened" onClick={this.StatusSortChangeButtons.bind(this,"opened")}>
               Открытые заказы
             </button>
-            <button className="FormDataStatusContainer__status FormDataStatusContainer__status-red toggleBtn-canceled" onClick={this.SortByStatus.bind(this,"canceled")}>
+            <button className="FormDataStatusContainer__status FormDataStatusContainer__status-red toggleBtn-canceled" onClick={this.StatusSortChangeButtons.bind(this,"canceled")}>
               Отмененные заказы
             </button>
-            <button className="FormDataStatusContainer__status FormDataStatusContainer__status-green toggleBtn-done" onClick={this.SortByStatus.bind(this,"done")}>
+            <button className="FormDataStatusContainer__status FormDataStatusContainer__status-green toggleBtn-done" onClick={this.StatusSortChangeButtons.bind(this,"done")}>
               Выполненные заказы
             </button>
           </div>

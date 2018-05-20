@@ -82,7 +82,7 @@ class Catalog extends Component{
                   </div>
                 </div>
 
-                <img className="card-img-top" src={item.image} alt="Card image cap" />
+                <img className="card-img-top" src={item.image} alt="Card cap" />
                 <div className="card-body">
                   <p className="card-text card__title h5 text-center">{item.name}</p>
                 </div>

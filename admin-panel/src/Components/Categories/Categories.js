@@ -161,9 +161,6 @@ class Categories extends Component{
 
   render(){
     let renderedCategories = null;
-    let categoryName = null;
-    let categoryLink = null;
-    let categoryDescription = null;
 
     if(this.state.categories){
       renderedCategories = this.state.categories.map( (item,index)=>{

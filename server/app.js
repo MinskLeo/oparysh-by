@@ -397,30 +397,6 @@ app.post('/admin/getformdata', (req, res) => {
   }
 
   // Types (today, week, month, all)
-  let searchObjectTypes = null;
-  switch (req.body.type) {
-    case "today":
-      let today = new Date();
-      let rentoday = today.getFullYear() + "-" + today.getMonth() + "-" + today.getDate();
-      today = new Date(rentoday);
-      console.log(today);
-      searchObjectTypes = {
-        dateOfReg: {
-          $gt: today,
-          $lt: Date.now()
-        }
-      }
-    break;
-    case "week":
-      
-    break;
-    case "month":
-      
-    break;
-    case "all":
-      
-    break;
-  }
 
   // Pagination
   let itemsPerPage = 15;
@@ -434,11 +410,25 @@ app.post('/admin/getformdata', (req, res) => {
   FormData.find({...searchObject})
   .skip((itemsPerPage*page)-itemsPerPage)
   .limit(itemsPerPage)
-  .exec( (err, result) => {
-    if (!err) {
-      res.send(result);
+  .exec( (err_items, result_items) => {
+    if (!err_items) {
+
+      FormData.find({ ...searchObject
+      }, (err_pages, result_pages) => {
+        if (!err_pages) {
+          availablePages = Math.ceil(result_pages.length / itemsPerPage);
+          let resultObj = {
+            items: result_items,
+            pages: availablePages
+          }
+          console.log(resultObj);
+          res.send(resultObj);
+        }else{
+          res.send(null);
+        }
+      });
+
     } else {
-      console.log(err);
       res.send(null);
     }
   })
