@@ -8,12 +8,47 @@ import Sidebar from "../Sidebar/Sidebar";
 class FormData extends Component{
   state = {
     items: null,
-    selectedType: "today"
+    selectedType: "today",
+    pagesCount: null,
+
+
+    donePressed: true,
+    canceledPressed: true,
+    openedPressed: true
+  }
+
+  componentWillMount = () => {
+    axios.get('http://localhost:8080/admin/getformdatapages', {}).then( (result) => {
+      this.setState({
+        pagesCount: result.data.availablePages
+      });
+    }).catch( (error) => {
+      alert("Error!");
+    });
+
+    axios.post('http://localhost:8080/admin/getformdata', {
+      type: this.state.selectedType,
+      done: this.state.donePressed,
+      opened: this.state.openedPressed,
+      canceled: this.state.canceledPressed
+
+    }).then((result) => {
+      this.setState({
+        items: result.data
+      });
+      console.log(result.data);
+    }).catch((error) => {
+      alert("Error!");
+    });
   }
 
   OnTypeSelectionChange = (type,e) => {
     axios.post('http://localhost:8080/admin/getformdata', {
-      type: type
+      type: type,
+      done: this.state.donePressed,
+      opened: this.state.openedPressed,
+      canceled: this.state.canceledPressed
+
     }).then( (result) => {
       this.setState({
         items: result.data,
@@ -23,9 +58,168 @@ class FormData extends Component{
     }).catch( (error) => {
       alert("Error!");
     });
+    
+  }
+
+  SortByStatus = (selectedStatus, e) => {
+    let requestObject = null;
+    let btn = null;
+
+    switch (selectedStatus) {
+       case "opened":
+        btn = this.state.openedPressed;
+
+        requestObject = {
+          opened: !btn,
+          canceled: this.state.canceledPressed,
+          done: this.state.donePressed
+        }
+        this.setState({
+          openedPressed: !btn
+        });
+
+
+        e.target.classList.toggle("toggleBtn-opened");
+        break;
+
+
+
+      case "done":
+      btn = this.state.donePressed;
+
+      requestObject = {
+        opened: this.state.openedPressed,
+        canceled: this.state.canceledPressed,
+        done: !btn
+      }
+
+      this.setState({
+        donePressed: !btn
+      });
+
+        
+      e.target.classList.toggle("toggleBtn-done");
+      break;
+
+
+
+
+
+
+     
+      case "canceled":
+        btn = this.state.canceledPressed;
+
+        requestObject = {
+          opened: this.state.donePressed,
+          canceled: !btn,
+          done: this.state.donePressed
+        }
+        this.setState({
+          canceledPressed: !btn
+        });
+
+        
+        e.target.classList.toggle("toggleBtn-canceled");
+        break;
+    }
+    
+    
+    console.log(requestObject);
+
+    axios.post('http://localhost:8080/admin/getformdata', requestObject).then((result) => {
+      this.setState({
+        items: result.data
+      });
+      console.log(result.data);
+    }).catch( (error) => {
+      alert("Error!");
+    });
+  }
+
+  ChangeBlockStatus = (status,id,index,e) => {
+    axios.post('http://localhost:8080/admin/setformdata', {
+      id: id,
+      status: status
+    }).then( (result) => {
+      if(result.data.success){
+        let itemsCopy = [...this.state.items];
+        itemsCopy[index].status=status;
+        this.setState({
+          items: itemsCopy
+        });
+      }else{
+        alert("Error! 1");
+      }
+    }).catch( (error) => {
+      alert("Error! 2");
+    });
+
+  }
+
+  OnPageClick = (page,e) => {
+    axios.post('http://localhost:8080/admin/getformdata', {
+      opened: this.state.donePressed,
+      canceled: this.state.canceledPressed,
+      done: this.state.donePressed,
+      page: page,
+      type: this.state.selectedType
+    }).then( (result) => {  
+      this.setState({
+        items: result.data
+      })
+    }).catch( (error) => {
+      alert("Error!");
+    });
   }
 
   render(){
+    let blocksRendered = null;
+    if(this.state.items){
+      blocksRendered = this.state.items.map( (item,index) =>{
+
+        let typeProperty = null;
+        switch (item.status) {
+          case "done":
+            typeProperty = "FormDataBock__tape bg-success";
+          break;
+          case "opened":
+            typeProperty = "FormDataBock__tape bg-warning";
+          break;
+          case "canceled":
+            typeProperty = "FormDataBock__tape bg-danger";
+          break;
+        }
+        return(
+          <div className="col-md-12 FormDataContentPart__FormDataBock" key={item["_id"]}>
+              <div className={typeProperty}></div>
+              <h3>{item.name}</h3>
+              <p>{item.phone}</p>
+              <p>{item.email}</p>
+              <p>{item.message}</p>
+              <ul className="ChangeType">
+                <li className="ChangeType__changer"><button className="FormDataStatusContainer__status FormDataStatusContainer__status-red" onClick={this.ChangeBlockStatus.bind(this,"canceled",item["_id"],index)}>Отменен</button> </li>
+                <li className="ChangeType__changer"><button className="FormDataStatusContainer__status FormDataStatusContainer__status-yellow" onClick={this.ChangeBlockStatus.bind(this,"opened",item["_id"],index)}>Открыт</button> </li>
+                <li className="ChangeType__changer"><button className="FormDataStatusContainer__status FormDataStatusContainer__status-green" onClick={this.ChangeBlockStatus.bind(this,"done",item["_id"],index)}>Завершен</button> </li>
+              </ul>
+          </div>
+        );
+      });
+    }
+
+    let pagesRendered = null;
+    if(this.state.pagesCount){
+      let pagesArray = [];
+      for(let i=0;i<this.state.pagesCount;i++){
+        pagesArray.push(i+1);
+      }
+      pagesRendered = pagesArray.map((item, index) => {
+          return (
+            <div className="page" onClick={this.OnPageClick.bind(this,item)}>{item}</div>
+          );
+      });
+    }
+
     return(
       <div className="row wrap">
         <Sidebar></Sidebar>
@@ -34,164 +228,25 @@ class FormData extends Component{
         
         <div className="FormData">
           <div className="row FormDataStatusContainer">
-            <button className="FormDataStatusContainer__status FormDataStatusContainer__status-yellow">
+            <button className="FormDataStatusContainer__status FormDataStatusContainer__status-yellow toggleBtn-opened" onClick={this.SortByStatus.bind(this,"opened")}>
               Открытые заказы
             </button>
-            <button className="FormDataStatusContainer__status FormDataStatusContainer__status-red">
+            <button className="FormDataStatusContainer__status FormDataStatusContainer__status-red toggleBtn-canceled" onClick={this.SortByStatus.bind(this,"canceled")}>
               Отмененные заказы
             </button>
-            <button className="FormDataStatusContainer__status FormDataStatusContainer__status-green">
+            <button className="FormDataStatusContainer__status FormDataStatusContainer__status-green toggleBtn-done" onClick={this.SortByStatus.bind(this,"done")}>
               Выполненные заказы
             </button>
           </div>
           <div className="row FormDataContentPart">
 
-            <div className="col-md-12 FormDataContentPart__FormDataBock">
-              <div className="FormDataBock__tape bg-danger"></div>
-              <h3>Андрей</h3>
-              <p>+375296655275</p>
-              <p>2119930@gmail.com</p>
-              <p>Побыстрее пожалуйста хочу опарышей</p>
-              <ul className="ChangeType">
-                <li className="ChangeType__changer"><button className="FormDataStatusContainer__status FormDataStatusContainer__status-red">Отменен</button> </li>
-                <li className="ChangeType__changer"><button className="FormDataStatusContainer__status FormDataStatusContainer__status-yellow">Открыт</button> </li>
-                <li className="ChangeType__changer"><button className="FormDataStatusContainer__status FormDataStatusContainer__status-green">Завершен</button> </li>
-              </ul>
-            </div>
-
-            <div className="col-md-12 FormDataContentPart__FormDataBock">
-            <div className="FormDataBock__tape bg-warning"></div>
-              <h3>Андрей</h3>
-              <p>+375296655275</p>
-              <p>2119930@gmail.com</p>
-              <p>Побыстрее пожалуйста хочу опарышей</p>
-              <ul className="ChangeType">
-                <li className="ChangeType__changer"><button className="FormDataStatusContainer__status FormDataStatusContainer__status-red">Отменен</button> </li>
-                <li className="ChangeType__changer"><button className="FormDataStatusContainer__status FormDataStatusContainer__status-yellow">Открыт</button> </li>
-                <li className="ChangeType__changer"><button className="FormDataStatusContainer__status FormDataStatusContainer__status-green">Завершен</button> </li>
-              </ul>
-            </div>
-
-            <div className="col-md-12 FormDataContentPart__FormDataBock">
-            <div className="FormDataBock__tape bg-success"></div>
-              <h3>Андрей</h3>
-              <p>+375296655275</p>
-              <p>2119930@gmail.com</p>
-              <p>Побыстрее пожалуйста хочу опарышей</p>
-              <ul className="ChangeType">
-                <li className="ChangeType__changer"><button className="FormDataStatusContainer__status FormDataStatusContainer__status-red">Отменен</button> </li>
-                <li className="ChangeType__changer"><button className="FormDataStatusContainer__status FormDataStatusContainer__status-yellow">Открыт</button> </li>
-                <li className="ChangeType__changer"><button className="FormDataStatusContainer__status FormDataStatusContainer__status-green">Завершен</button> </li>
-              </ul>
-            </div>
-
-            <div className="col-md-12 FormDataContentPart__FormDataBock">
-            <div className="FormDataBock__tape bg-danger"></div>
-              <h3>Андрей</h3>
-              <p>+375296655275</p>
-              <p>2119930@gmail.com</p>
-              <p>Побыстрее пожалуйста хочу опарышей</p>
-              <ul className="ChangeType">
-                <li className="ChangeType__changer"><button className="FormDataStatusContainer__status FormDataStatusContainer__status-red">Отменен</button> </li>
-                <li className="ChangeType__changer"><button className="FormDataStatusContainer__status FormDataStatusContainer__status-yellow">Открыт</button> </li>
-                <li className="ChangeType__changer"><button className="FormDataStatusContainer__status FormDataStatusContainer__status-green">Завершен</button> </li>
-              </ul>
-            </div>
-
-            <div className="col-md-12 FormDataContentPart__FormDataBock">
-            <div className="FormDataBock__tape bg-danger"></div>
-              <h3>Андрей</h3>
-              <p>+375296655275</p>
-              <p>2119930@gmail.com</p>
-              <p>Побыстрее пожалуйста хочу опарышей</p>
-              <ul className="ChangeType">
-                <li className="ChangeType__changer"><button className="FormDataStatusContainer__status FormDataStatusContainer__status-red">Отменен</button> </li>
-                <li className="ChangeType__changer"><button className="FormDataStatusContainer__status FormDataStatusContainer__status-yellow">Открыт</button> </li>
-                <li className="ChangeType__changer"><button className="FormDataStatusContainer__status FormDataStatusContainer__status-green">Завершен</button> </li>
-              </ul>
-            </div>
-
-            <div className="col-md-12 FormDataContentPart__FormDataBock">
-            <div className="FormDataBock__tape bg-danger"></div>
-              <h3>Андрей</h3>
-              <p>+375296655275</p>
-              <p>2119930@gmail.com</p>
-              <p>Побыстрее пожалуйста хочу опарышей</p>
-              <ul className="ChangeType">
-                <li className="ChangeType__changer"><button className="FormDataStatusContainer__status FormDataStatusContainer__status-red">Отменен</button> </li>
-                <li className="ChangeType__changer"><button className="FormDataStatusContainer__status FormDataStatusContainer__status-yellow">Открыт</button> </li>
-                <li className="ChangeType__changer"><button className="FormDataStatusContainer__status FormDataStatusContainer__status-green">Завершен</button> </li>
-              </ul>
-            </div>
-
-            <div className="col-md-12 FormDataContentPart__FormDataBock">
-              <div className="FormDataBock__tape bg-danger"></div>
-              <h3>Андрей</h3>
-              <p>+375296655275</p>
-              <p>2119930@gmail.com</p>
-              <p>Побыстрее пожалуйста хочу опарышей</p>
-              <ul className="ChangeType">
-                <li className="ChangeType__changer"><button className="FormDataStatusContainer__status FormDataStatusContainer__status-red">Отменен</button> </li>
-                <li className="ChangeType__changer"><button className="FormDataStatusContainer__status FormDataStatusContainer__status-yellow">Открыт</button> </li>
-                <li className="ChangeType__changer"><button className="FormDataStatusContainer__status FormDataStatusContainer__status-green">Завершен</button> </li>
-              </ul>
-            </div>
-
-            <div className="col-md-12 FormDataContentPart__FormDataBock">
-            <div className="FormDataBock__tape bg-danger"></div>
-              <h3>Андрей</h3>
-              <p>+375296655275</p>
-              <p>2119930@gmail.com</p>
-              <p>Побыстрее пожалуйста хочу опарышей</p>
-              <ul className="ChangeType">
-                <li className="ChangeType__changer"><button className="FormDataStatusContainer__status FormDataStatusContainer__status-red">Отменен</button> </li>
-                <li className="ChangeType__changer"><button className="FormDataStatusContainer__status FormDataStatusContainer__status-yellow">Открыт</button> </li>
-                <li className="ChangeType__changer"><button className="FormDataStatusContainer__status FormDataStatusContainer__status-green">Завершен</button> </li>
-              </ul>
-            </div>
-
-            <div className="col-md-12 FormDataContentPart__FormDataBock">
-            <div className="FormDataBock__tape bg-danger"></div>
-              <h3>Андрей</h3>
-              <p>+375296655275</p>
-              <p>2119930@gmail.com</p>
-              <p>Побыстрее пожалуйста хочу опарышей</p>
-              <ul className="ChangeType">
-                <li className="ChangeType__changer"><button className="FormDataStatusContainer__status FormDataStatusContainer__status-red">Отменен</button> </li>
-                <li className="ChangeType__changer"><button className="FormDataStatusContainer__status FormDataStatusContainer__status-yellow">Открыт</button> </li>
-                <li className="ChangeType__changer"><button className="FormDataStatusContainer__status FormDataStatusContainer__status-green">Завершен</button> </li>
-              </ul>
-            </div>
-
-            <div className="col-md-12 FormDataContentPart__FormDataBock">
-            <div className="FormDataBock__tape bg-danger"></div>
-              <h3>Андрей</h3>
-              <p>+375296655275</p>
-              <p>2119930@gmail.com</p>
-              <p>Побыстрее пожалуйста хочу опарышей</p>
-              <ul className="ChangeType">
-                <li className="ChangeType__changer"><button className="FormDataStatusContainer__status FormDataStatusContainer__status-red">Отменен</button> </li>
-                <li className="ChangeType__changer"><button className="FormDataStatusContainer__status FormDataStatusContainer__status-yellow">Открыт</button> </li>
-                <li className="ChangeType__changer"><button className="FormDataStatusContainer__status FormDataStatusContainer__status-green">Завершен</button> </li>
-              </ul>
-            </div>
-
-            <div className="col-md-12 FormDataContentPart__FormDataBock">
-            <div className="FormDataBock__tape bg-danger"></div>
-              <h3>Андрей</h3>
-              <p>+375296655275</p>
-              <p>2119930@gmail.com</p>
-              <p>Побыстрее пожалуйста хочу опарышей</p>
-              <ul className="ChangeType">
-                <li className="ChangeType__changer"><button className="FormDataStatusContainer__status FormDataStatusContainer__status-red">Отменен</button> </li>
-                <li className="ChangeType__changer"><button className="FormDataStatusContainer__status FormDataStatusContainer__status-yellow">Открыт</button> </li>
-                <li className="ChangeType__changer"><button className="FormDataStatusContainer__status FormDataStatusContainer__status-green">Завершен</button> </li>
-              </ul>
-            </div>
+            {blocksRendered}
 
           </div>
           <div className="row FormDataPagesContainer">
-          
+            <div className="pages">
+              {pagesRendered}
+            </div>
           </div>
         </div>
       

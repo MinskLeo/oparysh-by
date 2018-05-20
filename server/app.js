@@ -54,7 +54,8 @@ const FormData = mongoose.model('FormData',{
   email: String,
   message: String,
   dateOfReg: Date,
-  dateFinal: Date
+  dateFinal: Date,
+  status: String
 })
 
 let categories = [];
@@ -383,24 +384,123 @@ app.post('/admin/setproductfile', upload.single('file'), (req, res) => {
 });
 
 app.post('/admin/getformdata', (req, res) => {
-  FormData.find({},(err,result)=>{
-    if(!err){
+  // Statuses
+  let searchArray = [];
+  if(req.body.done){
+    searchArray.push("done" );
+  }
+  if (req.body.opened) {
+    searchArray.push("opened");
+  }
+  if (req.body.canceled) {
+    searchArray.push("canceled");
+  }
+
+  // Types (today, week, month, all)
+  let searchObjectTypes = null;
+  switch (req.body.type) {
+    case "today":
+      let today = new Date();
+      let rentoday = today.getFullYear() + "-" + today.getMonth() + "-" + today.getDate();
+      today = new Date(rentoday);
+      console.log(today);
+      searchObjectTypes = {
+        dateOfReg: {
+          $gt: today,
+          $lt: Date.now()
+        }
+      }
+    break;
+    case "week":
+      
+    break;
+    case "month":
+      
+    break;
+    case "all":
+      
+    break;
+  }
+
+  // Pagination
+  let itemsPerPage = 15;
+  let page = req.body.page;
+
+  let searchObject = {
+    status: { $in: searchArray }
+  }
+
+
+  FormData.find({...searchObject})
+  .skip((itemsPerPage*page)-itemsPerPage)
+  .limit(itemsPerPage)
+  .exec( (err, result) => {
+    if (!err) {
       res.send(result);
-    }else{
+    } else {
+      console.log(err);
       res.send(null);
     }
   })
 });
 
-// let abc = new FormData({
-//     name: "Андрей",
+app.post('/admin/setformdata', (req, res) => {
+  FormData.findById(req.body.id,(err,result)=>{
+    result.status=req.body.status;
+    result.save( (error,product)=>{
+      if(!error){
+        res.send({success: true});
+      }else{
+        res.send({success: false});
+      }
+    });
+  });
+  
+});
+
+app.get('/admin/getformdatapages', (req, res) => {
+  // Statuses check
+  let searchArray = [];
+  if (req.body.done) {
+    searchArray.push("done");
+  }
+  if (req.body.opened) {
+    searchArray.push("opened");
+  }
+  if (req.body.canceled) {
+    searchArray.push("canceled");
+  }
+  let searchObject = {
+    status: {
+      $in: searchArray
+    }
+  }
+
+  let itemsPerPage = 15;
+  let availablePages = null;
+  FormData.find({},(err,result)=>{
+    if(!err){
+      availablePages = Math.ceil(result.length / itemsPerPage);
+    }
+    res.send({
+      availablePages: availablePages
+    });
+  });
+});
+
+// for(let i=6;i<25;i++){
+//   let abc = new FormData({
+//     name: "Андрей "+i,
 //     phone: "+375296655275",
 //     email: "2119930@gmail.com",
-//     message: "Побыстрее пожалуйста",
+//     message: "Побыстрее пожалуйста "+i,
 //     dateOfReg: Date.now(),
-//     dateFinal: null
-// });
+//     dateFinal: null,
+//     status: "opened"
+//   });
 // abc.save();
+// }
+
 
 
 app.listen(8080,()=>{
