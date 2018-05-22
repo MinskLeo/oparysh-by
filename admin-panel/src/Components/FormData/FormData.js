@@ -27,7 +27,7 @@ class FormData extends Component{
     }
 
     axios.post('http://localhost:8080/admin/getformdata', requestObject).then((result) => {
-      if (result.data.pages != 0 && result.data.pages < this.state.currentPage) {
+      if (result.data.pages !== 0 && result.data.pages < this.state.currentPage) {
         this.setState({
           items: result.data.items,
           pages: result.data.pages,
@@ -89,7 +89,7 @@ class FormData extends Component{
     // Отправка запроса
     axios.post('http://localhost:8080/admin/getformdata', requestObject).then((result) => {
     console.log(requestObject);
-      if (result.data.pages!=0 && result.data.pages < this.state.currentPage) {
+      if (result.data.pages!==0 && result.data.pages < this.state.currentPage) {
         this.setState({
           items: result.data.items,
           pages: result.data.pages,
@@ -122,7 +122,7 @@ class FormData extends Component{
     }
 
     axios.post('http://localhost:8080/admin/getformdata', requestObject).then((result) => {
-      if (result.data.pages != 0 && result.data.pages < this.state.currentPage) {
+      if (result.data.pages !== 0 && result.data.pages < this.state.currentPage) {
         this.setState({
           items: result.data.items,
           pages: result.data.pages,
@@ -146,23 +146,7 @@ class FormData extends Component{
 
 
   ChangeBlockStatus = (status,id,index,e) => {
-    axios.post('http://localhost:8080/admin/setformdata', {
-      id: id,
-      status: status
-    }).then( (result) => {
-      if(result.data.success){
-        let itemsCopy = [...this.state.items];
-        itemsCopy[index].status=status;
-        this.setState({
-          items: itemsCopy
-        });
-      }else{
-        alert("Error! 1");
-      }
-    }).catch( (error) => {
-      alert("Error! 2");
-    });
-
+    
   }
 
   PageChangeEvent = (page, e) => {
@@ -232,7 +216,7 @@ class FormData extends Component{
       }
       pagesRendered = pagesArray.map((item, index) => {
           return (
-            <div className="page" onClick={this.PageChangeEvent.bind(this,item)}>{item}</div>
+            <div key={index} className="page" onClick={this.PageChangeEvent.bind(this,item)}>{item}</div>
           );
       });
     }

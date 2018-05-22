@@ -1,3 +1,7 @@
+// Production build INSTRUCTIONS!
+// 1. В путях файлов, которые приписываются в роуте /admin/setproduct убрать http://localhost:8080
+// 2. 
+
 // Importing modules
 const express = require("express");
 const app = express();
@@ -8,7 +12,7 @@ const bodyParser = require('body-parser');
 var multer = require('multer');
 var storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, './ProductImages')
+    cb(null, './assets/ProductImages')
   },
   filename: function (req, file, cb) {
 
@@ -31,7 +35,9 @@ var upload = multer({
 mongoose.connect('mongodb://localhost/oparysh');
 app.set("view engine", "ejs");
 app.use(bodyParser.json());
+// app.use(express.static("ProductImages"));
 app.use(express.static("assets"));
+
 
 // Creating variables
 const Product = mongoose.model('Product', {
@@ -366,21 +372,47 @@ app.post('/admin/newcategory', (req, res) => {
 });
 
 
-app.post('/admin/setproduct',(req, res) => {
-  console.log(req.body);
-  res.send({
-    status:"OK"
+app.post('/admin/setproduct', upload.single('file'), (req, res) => {
+  // console.log("==============file==================");
+  Product.findById(req.body.id,(err,product)=>{
+    product.name=req.body.name;
+    product.category=req.body.category;
+    product.price = req.body.price;
+    product.description = req.body.description;
+    if(req.file){
+      product.image = "http://localhost:8080/ProductImages/" + req.file.filename;
+    }
+    product.save( (error_save,product_save)=>{
+      if(!error_save){
+        
+        res.send({success: true});
+      }else{
+        res.send(null);
+      }
+    });
+
   });
+  console.log("Done!");
+  // console.log(req.file);
+
+  // console.log("============body====================");
+  // console.log(req.body);
+  // console.log("============end====================");
 });
 
-app.post('/admin/setproductfile', upload.single('file'), (req, res) => {
-  console.log("================================");
-  console.log(req.file);
-  req.file.filename = req.file.originalname;
-  req.file
-  console.log("================================");
-  console.log(req.body.id);
-  res.send(null);
+app.post('/admin/deleteproduct', (req, res) => {
+  let id = req.body.id;
+  Product.findById(id,(err_find,product_find)=>{
+    if (!err_find) {
+      product_find.remove((err_del, product_del) => {
+        if(!err_del){
+          res.send({success:true});
+        }else{
+          res.send(null);
+        }
+      });
+    }
+  });
 });
 
 app.post('/admin/getformdata', (req, res) => {

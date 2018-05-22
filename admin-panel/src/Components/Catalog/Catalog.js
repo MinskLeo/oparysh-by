@@ -35,7 +35,7 @@ class Catalog extends Component{
     }).then( (result) => {
       this.setState({
         items: result.data,
-        selectedCategory: name
+        selectedCategory: link
       })
     }).catch( (error) => {
       alert('Error!');
@@ -43,6 +43,7 @@ class Catalog extends Component{
   }
 
   OnItemClickChange = (index,e) => {
+    
     this.setState({
       selectedProduct: this.state.items[index]
     }); 
@@ -52,10 +53,21 @@ class Catalog extends Component{
     this.setState({
       selectedProduct: null
     });
-    console.log("Bu!");
+    axios.post('http://localhost:8080/admin/getcatalog', {
+      category: this.state.selectedCategory
+    }).then((result) => {
+      this.setState({
+        items: result.data
+      })
+    }).catch((error) => {
+      alert('Error!');
+    });
   }
 
   render(){
+    // console.log(this.state.selectedProduct);
+    // console.log("==========");
+    // console.log(this.state.selectedCategory);
     let categoriesRendered = null;
     let itemsRendered = null;
     let changeDataWindowRendered = null;
@@ -108,6 +120,9 @@ class Catalog extends Component{
       } 
       selectedCategory = {
         this.state.selectedCategory
+      }
+      CloseMethod = {
+        this.CloseDataWindowMethod
       }
       />
     }

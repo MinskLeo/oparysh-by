@@ -13,6 +13,7 @@
   align-items: center;
 }
 .form{
+  position: relative;
   background: #eee;
   box-shadow: 0 0 20px #333;
   border-radius: 2px;
@@ -119,4 +120,56 @@
 .fixedCard img{
   min-height: 0;
   padding: 0;
+}
+
+
+
+.form__button-fileinput {
+  font-size: 17px;
+  margin: 10px 0;
+  text-align: center;
+  cursor: pointer;
+  background: rgb(199, 199, 199);
+  color: #333;
+  box-shadow: 7px 7px 2px rgb(167, 167, 167);
+  margin-left: -10px;
+}
+.form__button-fileinput:active{
+  box-shadow: 3px 3px 2px rgb(167, 167, 167);
+}
+.row-100{
+  width: 100%;
+
+  
+}
+.row-flex{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.row-column{
+  flex-direction: column;
+}
+.form__inputFileValue{
+  font-style: italic;
+}
+
+
+.closeChangeDataWindow{
+  position: absolute;
+  top: 0;
+  right: 0;
+  margin-right: 20px;
+  z-index: 25000;
+  font-size: 40px;
+}
+.closeChangeDataWindow .fa-times{
+  cursor: pointer;
+}
+.closeChangeDataWindow:hover .fa-times{
+  color: rgb(243, 46, 46);
+}
+.closeChangeDataWindow .fa-times:active{
+  color: rgb(209, 36, 36);
+  transform: scale(1.05);
 }
