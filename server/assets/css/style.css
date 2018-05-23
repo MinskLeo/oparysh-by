@@ -178,7 +178,7 @@ color: #ee13a9;
 /*footer*/
 
 .Footer {
-  /* position: absolute; */
+  position: absolute; 
   left: 0;
   bottom: 0;
   width: 100%;
@@ -206,9 +206,9 @@ color: #ee13a9;
   padding-left: 0px;
 }
 
-
-
-
+.footer_p {
+padding-bottom: 40px;
+}
 
 /* ProductView style */
 .preInfo{
