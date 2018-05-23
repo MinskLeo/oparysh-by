@@ -1,5 +1,5 @@
 // Production build INSTRUCTIONS!
-// 1. В путях файлов, которые приписываются в роуте /admin/setproduct убрать http://localhost:8080
+// 1. В путях файлов, которые приписываются в роуте /admin/setproduct убрать http://localhost:8080 а так же из deleteproduct
 // 2. 
 
 // Importing modules
@@ -7,6 +7,7 @@ const express = require("express");
 const app = express();
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
+const fs = require('fs');
 
 // Multer
 var multer = require('multer');
@@ -234,18 +235,33 @@ app.post('/admin/getcatalog', (req, res) => {
   let category = req.body.category;
   let products = null;
 
-  if(category)
-    Product.find({
-      category: category
-    },(err,result)=>{
-      if (err) {
-        console.log("Error! : " + err.message);
-      } else {
-        products = result;
-      }
+  if(category){
+    if (category == "all") {
+      Product.find({ }, (err, result) => {
+        if (err) {
+          console.log("Error! : " + err.message);
+        } else {
+          products = result;
+        }
 
-      res.send(products);
-    });
+        res.send(products);
+      });
+    }else{
+      Product.find({
+        category: category
+      }, (err, result) => {
+        if (err) {
+          console.log("Error! : " + err.message);
+        } else {
+          products = result;
+        }
+
+        res.send(products);
+      });
+    }
+  }
+
+    
 });
 
 app.post('/admin/delcategory', (req, res) => {
@@ -375,11 +391,19 @@ app.post('/admin/newcategory', (req, res) => {
 app.post('/admin/setproduct', upload.single('file'), (req, res) => {
   // console.log("==============file==================");
   Product.findById(req.body.id,(err,product)=>{
+    
     product.name=req.body.name;
     product.category=req.body.category;
     product.price = req.body.price;
     product.description = req.body.description;
     if(req.file){
+      let splitted = product.image.split('/');
+      fs.access('./assets/ProductImages/' + splitted[splitted.length - 1], fs.constants.F_OK, (err_exists) => {
+        if (!err_exists){
+          fs.unlinkSync('./assets/ProductImages/' + splitted[splitted.length - 1]);
+        }
+      });
+
       product.image = "http://localhost:8080/ProductImages/" + req.file.filename;
     }
     product.save( (error_save,product_save)=>{
@@ -403,6 +427,17 @@ app.post('/admin/setproduct', upload.single('file'), (req, res) => {
 app.post('/admin/deleteproduct', (req, res) => {
   let id = req.body.id;
   Product.findById(id,(err_find,product_find)=>{
+
+    if (product_find.image){
+      let splitted = product_find.image.split('/');
+      fs.access('./assets/ProductImages/' + splitted[splitted.length - 1], fs.constants.F_OK, (err_exists) => {
+        if (!err_exists) {
+          fs.unlinkSync('./assets/ProductImages/' + splitted[splitted.length - 1]);
+        }
+      });
+    }
+    
+
     if (!err_find) {
       product_find.remove((err_del, product_del) => {
         if(!err_del){
@@ -410,6 +445,33 @@ app.post('/admin/deleteproduct', (req, res) => {
         }else{
           res.send(null);
         }
+      });
+    }
+  });
+});
+
+app.post('/admin/newproduct', upload.single('file'), (req, res) => {
+  let file = null;
+  if (req.file){
+    file = "http://localhost:8080/ProductImages/" + req.file.filename;
+  }
+  
+
+  let product = new Product({
+    name : req.body.name,
+    category : req.body.category,
+    price : req.body.price,
+    description : req.body.description,
+    image :  file
+  });
+  product.save( (err_save,product_save)=>{
+    if (!err_save) {
+      res.send({
+        success: true
+      });
+    }else{
+      res.send({
+        success: false
       });
     }
   });

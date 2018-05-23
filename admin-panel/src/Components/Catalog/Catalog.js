@@ -4,6 +4,7 @@ import "./Catalog.css";
 import Sidebar from "../Sidebar/Sidebar";
 // import NewChangeDataWindow from "./NewChangeDataWindow/NewChangeDataWindow";
 import ChangeDataWindow from "./ChangeDataWindow/ChangeDataWindow";
+import NewProductWindow from "./NewProductWindow/NewProductWindow";
 
 import axios from "axios";
 
@@ -12,7 +13,8 @@ class Catalog extends Component{
     categories: null,
     items: null,
     selectedProduct: null,
-    selectedCategory: null
+    selectedCategory: null,
+    newWindow: false
   }
 
   componentDidMount = () => {
@@ -25,6 +27,17 @@ class Catalog extends Component{
         categories: result.data
       });
     }).catch( (error) => {
+      alert('Error!');
+    });
+
+    axios.post('http://localhost:8080/admin/getcatalog', {
+      category: "all"
+    }).then((result) => {
+      this.setState({
+        items: result.data,
+        selectedCategory: "all"
+      })
+    }).catch((error) => {
       alert('Error!');
     });
   }
@@ -64,6 +77,42 @@ class Catalog extends Component{
     });
   }
 
+  CloseNewProductWindow = () => {
+    this.setState({
+      newWindow: false
+    });
+  }
+
+  AddNewProduct = () => {
+    this.setState({
+      newWindow: true
+    });
+  }
+
+  FastProductDelete = (id,e) => {
+    axios.post('http://localhost:8080/admin/deleteproduct', {
+      id: id
+    }).then((result) => {
+      if (result.data.success) {
+
+        axios.post('http://localhost:8080/admin/getcatalog', {
+          category: this.state.selectedCategory
+        }).then((result) => {
+          this.setState({
+            items: result.data
+          })
+        }).catch((error) => {
+          alert('Error! 1');
+        });
+
+      } else {
+        alert("Error! 2");
+      }
+    }).catch((error) => {
+      alert("Error! 3");
+    });
+  }
+
   render(){
     // console.log(this.state.selectedProduct);
     // console.log("==========");
@@ -71,6 +120,19 @@ class Catalog extends Component{
     let categoriesRendered = null;
     let itemsRendered = null;
     let changeDataWindowRendered = null;
+    let newProductWindowRendered = null;
+
+    if(this.state.newWindow){
+      newProductWindowRendered = <NewProductWindow
+      categories = {
+        this.state.categories
+      }
+      closeMethod = {
+        this.CloseNewProductWindow
+      }
+      />
+    }
+
 
     if(this.state.categories){
       categoriesRendered =  this.state.categories.map( (item)=>{
@@ -83,14 +145,14 @@ class Catalog extends Component{
     if(this.state.items){
       itemsRendered = this.state.items.map( (item,index)=>{
         return (
-          <div className="col-md-3 col-sm-4" key={item.name}>
+          <div className="col-md-3 col-sm-4" key={item["_id"]}>
             <div className="card_container">
               <div className="card" style={{ overflow: "hidden" }} >
 
                 <div className="cardmask">
                   <div className="cardmask__wrapper">
                     <i className="fas fa-pencil-alt" onClick={this.OnItemClickChange.bind(this, index)}></i>
-                    <i className="fas fa-trash-alt"></i>
+                    <i className="fas fa-trash-alt" onClick={this.FastProductDelete.bind(this, item["_id"])}></i>
                   </div>
                 </div>
 
@@ -130,6 +192,7 @@ class Catalog extends Component{
     return(
       <div>
         {changeDataWindowRendered}
+        {newProductWindowRendered}
         <div className="row wrap">
 
           
@@ -145,6 +208,7 @@ class Catalog extends Component{
 
           <div className="col-md-2 Sidebar">
             <ul className="Sidebar__catContainer">
+              <li className="catContainer__li addProductContainer"><i class="far fa-plus-square" onClick={this.AddNewProduct}></i></li>
               <li className="catContainer__li"><button className="catContainer__button" onClick={this.OnCategoryClick.bind(this, "all")}>Весь каталог</button></li>
               {categoriesRendered}
             </ul>
