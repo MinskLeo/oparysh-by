@@ -112,7 +112,7 @@ html, body {
 .categoryDescription__column h3{
   font-size: 30px;
   margin-top: 20px;
-  color: rgb(173, 10, 173);
+  color: #ad0aad;
 }
 .categoryDescription__column p{
   font-size: 25px;
@@ -121,10 +121,9 @@ html, body {
   width: 90%;
 }
 .Content {
-  padding: 0 100px;
-  padding-top: 50px;
-  padding-bottom: 100px;
-  margin: 0;
+
+padding-top: 45px;
+padding-bottom: 100px;
 }
 
 .btn-dark {
@@ -147,7 +146,7 @@ color: #ee13a9;
   height: 100%;
   position: absolute;
   z-index: 2000;
-  background: rgba(238, 238, 238, 0.466);
+  background: rgba(#eeeeee, 0.47);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -178,14 +177,14 @@ color: #ee13a9;
 /*footer*/
 
 .Footer {
-  position: absolute; 
+  position: absolute;
   left: 0;
   bottom: 0;
   width: 100%;
-  background-color: #000000;
+  background: #000000;
+  margin:0;
+  padding-top:10px;
   text-align: center;
-  padding-top: 15px;
-  margin: 0px;
 }
 
 .Footer p {
@@ -206,10 +205,6 @@ color: #ee13a9;
   padding-left: 0px;
 }
 
-.footer_p {
-padding-bottom: 40px;
-}
-
 /* ProductView style */
 .preInfo{
   display: flex;
@@ -226,7 +221,7 @@ padding-bottom: 40px;
 .contentpart-name{
   padding: 30px 0;
   padding-top: 50px;
-  color: rgb(175, 10, 175);
+  color: #af0aaf;
 }
 .contentpart-description{
   padding: 30px 0;
@@ -256,7 +251,7 @@ padding-bottom: 40px;
 }
 
 .input-group-text {
-  background : rgba(0, 0, 0, 0.507) ;
+  background : rgba(#000000, 0.51) ;
   border-radius: 0px;
   color: #eee;
   width:100%;
@@ -269,13 +264,13 @@ padding-bottom: 40px;
 
 .form-control:focus {
   border-color: #ee13a9;
-  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(175, 10, 175, 0.6);
+  box-shadow: inset 0 1px 1px rgba(#000000, 0.07), 0 0 8px rgba(#af0aaf, 0.6);
 }
 
  textarea {
   resize: none;
 }
- 
+
 .feedbackForm{
   max-width: 500px;
   margin: auto;
@@ -283,13 +278,13 @@ padding-bottom: 40px;
 .feedbackForm__button-submit-purple {
   position: relative;
   padding: 5px 20px;
-  background: rgb(173, 10, 173);
+  background: #ad0aad;
   border: none;
   border-radius: 1px;
   display: block;
   margin: auto;
   margin-bottom: 50px;
-  box-shadow: 7px 7px 2px rgb(95, 7, 95);
+  box-shadow: 7px 7px 2px #600760;
   cursor: pointer;
   outline: none !important;
   color: #eee;
@@ -299,8 +294,8 @@ padding-bottom: 40px;
   transition: all 70ms linear 0s;
 }
 .feedbackForm__button-submit-purple:active {
-  background: rgb(130, 10, 130);
+  background: #820a82;
   top: 4px;
   left: 4px;
-  box-shadow: 3px 3px 2px rgb(95, 7, 95);
+  box-shadow: 3px 3px 2px #600760;
 }

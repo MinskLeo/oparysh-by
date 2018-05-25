@@ -33,7 +33,7 @@
         </label>
       </div>
 
-      <div class="Nav_bar row footer_p">
+      <div class="Nav_bar row ">
         <div class="col-md-1 "></div>
         <a href="/company" class="col-md-2 ">О компании</a>
         <a href="/cooperation" class="col-md-2 ">Cотрудничество</a>
@@ -56,7 +56,7 @@
       </div>
 
       <!-- DEBUG block - content part -->
-
+      <div class="content footer_p">
       <% if(product) {%>
         <!-- name (padding-top a lot) -->
         <!-- image (left) -->
@@ -65,47 +65,43 @@
         <!-- description -->
         <!--  -->
 
-
-        
-        <div class="row contentpart-name">
-          <!-- name -->
-          <div class="col-md-12 text-center"><h3><%= product.name %></h3></div>
-        </div>
-
-        <!-- pre-description (image, price, category) -->
-        <div class="container">
-          <div class="row">
-          
-
-            <!-- image -->
-            <div class="col-md-6">
-              <img src=<%= product.image %> alt="#" class="img-thumbnail rounded">
-            </div>
-            
-            <div class="col-md-6 preInfo">
-                <!-- price -->
-              <h3><%= product.price %></h3>
-            </div>
-
-
+          <div class="row contentpart-name">
+            <!-- name -->
+            <div class="col-md-12 text-center"><h3><%= product.name %></h3></div>
           </div>
-          
-          <!-- description -->
-        </div>
 
-        <div class="container contentpart-description">
-          <div class="row">
-            <div class="col-md-12">
-              <p class="text-center"><%= product.description %></p>
+          <!-- pre-description (image, price, category) -->
+          <div class="container Content">
+            <div class="row">
+
+
+              <!-- image -->
+              <div class="col-md-6">
+                <img src=<%= product.image %> alt="#" class="img-thumbnail rounded">
+              </div>
+
+              <div class="col-md-6 preInfo">
+                  <!-- price -->
+                <h3><%= product.price %></h3>
+              </div>
+
+
+            </div>
+
+            <!-- description -->
+          </div>
+
+          <div class="container contentpart-description">
+            <div class="row">
+              <div class="col-md-12">
+                <p class="text-center"><%= product.description %></p>
+              </div>
             </div>
           </div>
         </div>
-        
-
-
 
       <% } %>
-      
+
   <div class="Footer row">
     <div class="col-md-2">
       <a href="#">
