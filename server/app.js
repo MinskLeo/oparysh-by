@@ -1,6 +1,6 @@
 // Production build INSTRUCTIONS!
 // 1. В путях файлов, которые приписываются в роуте /admin/setproduct убрать http://localhost:8080 а так же из deleteproduct
-// 2. 
+// 2.
 
 // Importing modules
 const express = require("express");
@@ -130,23 +130,23 @@ app.get('/',  (req, res) => {
 
 app.get('/company', (req, res) => {
    CategoriesDatabaseSelection().then( (value)=>{
-    res.render("index", { categories: value });
+    res.render("company", { categories: value });
   });
-  
+
 });
 
 app.get('/cooperation', (req, res) => {
   CategoriesDatabaseSelection().then( (value)=>{
     res.render("cooperation", { categories: value });
   });
-  
+
 });
 
 app.get('/catalog', (req, res) => {
   CategoriesDatabaseSelection().then((value) => {
     res.render("catalog", { categories: value });
   });
-  
+
 });
 
 app.get('/contacts', (req, res) => {
@@ -210,7 +210,7 @@ app.get('/catalog/\*\/', (req, res) => {
 
       });
 
-      
+
 
   }else if(splitted.length==4){
   // Открытая категория + товар (открыта страница товара)
@@ -294,7 +294,7 @@ app.post('/admin/getcatalog', (req, res) => {
     }
   }
 
-    
+
 });
 
 app.post('/admin/delcategory', (req, res) => {
@@ -377,7 +377,7 @@ app.post('/admin/setcategory', (req, res) => {
         }
         res.send(resultObj);
       }
-      
+
     });
 
   }
@@ -408,7 +408,7 @@ app.post('/admin/newcategory', (req, res) => {
             res.send(resultObj);
           }
 
-          
+
         });
       }
 
@@ -417,14 +417,14 @@ app.post('/admin/newcategory', (req, res) => {
     res.send(resultObj);
 
   }
-  
+
 });
 
 
 app.post('/admin/setproduct', upload.single('file'), (req, res) => {
   // console.log("==============file==================");
   Product.findById(req.body.id,(err,product)=>{
-    
+
     product.name=req.body.name;
     product.category=req.body.category;
     product.price = req.body.price;
@@ -441,7 +441,7 @@ app.post('/admin/setproduct', upload.single('file'), (req, res) => {
     }
     product.save( (error_save,product_save)=>{
       if(!error_save){
-        
+
         res.send({success: true});
       }else{
         res.send(null);
@@ -469,7 +469,7 @@ app.post('/admin/deleteproduct', (req, res) => {
         }
       });
     }
-    
+
 
     if (!err_find) {
       product_find.remove((err_del, product_del) => {
@@ -488,7 +488,7 @@ app.post('/admin/newproduct', upload.single('file'), (req, res) => {
   if (req.file){
     file = "http://localhost:8080/ProductImages/" + req.file.filename;
   }
-  
+
 
   let product = new Product({
     name : req.body.name,
@@ -572,7 +572,7 @@ app.post('/admin/setformdata', (req, res) => {
       }
     });
   });
-  
+
 });
 
 app.post('/admin/getformdatapages', (req, res) => {
