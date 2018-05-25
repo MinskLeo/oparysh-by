@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="style.css">
+  <title>controls</title>
+</head>
+
+<body>
+  <div class="row">
+    <!-- left side -->
+    <div class="col-md-2 dark"></div>
+    <!-- right side -->
+    <div class="col-md-10 light">
+      <div class="form-group">
+        <!-- categoryName -->
+        <label for="categoryName">Category name</label>
+        <input type="email" class="form-control" id="categoryName" aria-describedby="categoryNameHelp" placeholder="category name">
+        <small id="categoryNameHelp" class="form-text text-muted">Enter category name</small>
+        <!-- categoryLink -->
+        <label for="categoryLink">Category link</label>
+        <input type="email" class="form-control" id="categoryLink" aria-describedby="categoryLinkHelp" placeholder="category name">
+        <small id="categoryLinkHelp" class="form-text text-muted">Enter category link</small>
+        <!-- categoryDescription -->
+        <label for="Description">Description</label>
+         <textarea class="form-control" rows="10" id="Description"></textarea>
+      </div>
+      <div class="form-row d-flex align-items-center">
+        <div class="col-md-3"><button type="button" class="btn save_btn">Save</button></div>
+        <div class="col-md-3"><button type="button" class="btn delete_btn">Delete</button></div>
+        <div class="col-md-4"></div>
+        <div class="col-md-2">
+          <!-- add pic -->
+        <img src="img-icon.png" class="img_pick" alt="pick img">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+
+</html>
