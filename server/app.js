@@ -69,10 +69,38 @@ let categories = [];
 
 // Выборка категорий. Использование:
 // CategoriesDatabaseSelection().then( (value)=>{} );
+// MONGO::::
+// const CategoriesDatabaseSelection = async () => {
+//   let resultData = null;
+//   await Category.find({},(err,result) => {
+//     if(!err){
+//       resultData = result;
+//     }
+//   });
+//   return await resultData;
+// }
+// SQL::::
+
+var mysql = require('mysql');
+var connection = mysql.createConnection({
+  host: 'localhost',
+  user: 'root',
+  database: "oparysh"
+});
+connection.connect();
 const CategoriesDatabaseSelection = async () => {
   let resultData = null;
-  await Category.find({},(err,result) => {
-    if(!err){
+  // connection.query("SELECT * FROM categories", (err, results) => {
+  //   if (!err) {
+  //     resultData = results;
+  //   }
+  //   console.log(resultData);
+  //   console.log("Length: "+resultData.length);
+  //   return resultData;
+  // });
+  
+  await Category.find({}, (err, result) => {
+    if (!err) {
       resultData = result;
     }
   });
@@ -88,11 +116,16 @@ app.get('*', (req, res, next) => {
 
 
 app.get('/',  (req, res) => {
+  // connection.query("SELECT * FROM categories", (err, results) => {
+  // if (!err) {
+  //   res.render("index", { categories: results });
+  // }
   CategoriesDatabaseSelection().then( (value)=>{
     res.render("index", { categories: value });
   });
 
   
+  // });
 });
 
 app.get('/company', (req, res) => {
