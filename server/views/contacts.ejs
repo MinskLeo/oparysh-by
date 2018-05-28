@@ -88,9 +88,9 @@
         </div>
         <div class="row" style="  padding-top:20px">
           <div class="col-md-1"></div>
-          <div class="col-md-10 map text-center">
+          <div class="col-md-10 text-center">
             <p class="h3">Где нас найти</p>
-            <img src="/images/map.png" alt="карта">
+            <div id="map"></div>
           </div>
           <div class="col-md-1"></div>
         </div>
@@ -119,6 +119,22 @@
       <div class="col-md-2"></div>
     </div>
   </div>
+  <script>
+    function initMap() {
+      var uluru = {lat: -25.363, lng: 131.044};
+      var map = new google.maps.Map(document.getElementById('map'), {
+        zoom: 4,
+        center: uluru
+      });
+      var marker = new google.maps.Marker({
+        position: uluru,
+        map: map
+      });
+    }
+  </script>
+  <script async defer
+  src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAd6li66GoRNJMoQLCektDhblPL3Ug8VWk&callback=initMap">
+  </script>
   <script type="text/javascript" src="/js/scripts.js"></script>
 </body>
 
