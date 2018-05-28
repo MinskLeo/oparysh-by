@@ -7,6 +7,15 @@ html, body {
   height: 100%;
 }
 
+a {
+  color: #000;
+}
+
+a:hover {
+  color: #000;
+  text-decoration: none;
+}
+
 .wrap {
   background-color: #eee;
   min-height: 100%;
@@ -41,14 +50,13 @@ html, body {
   color: #f2f2f2;
   text-align: center;
   padding: 14px 16px;
-
   text-decoration: none;
   font-size: 17px;
   display: block;
   width: 100%;
 }
 
-.Nav_bar div{
+.Nav_bar div {
   padding: 0;
 }
 
@@ -85,9 +93,11 @@ html, body {
 #catalog:hover .drop_h {
   display: block;
 }
-#catalog:hover .drop_h a:hover{
+
+#catalog:hover .drop_h a:hover {
   background: #000000;
 }
+
 .drop_h {
   position: absolute;
   display: none;
@@ -101,56 +111,67 @@ html, body {
 }
 
 /*content wrap*/
-.categoryDescription__column{
+
+.categoryDescription__column {
   padding: 20px 0;
-
-
   display: flex;
   justify-content: center;
   align-items: center;
 }
-.categoryDescription__column h3{
+
+.categoryDescription__column h3 {
   font-size: 30px;
   margin-top: 20px;
   color: #ad0aad;
 }
-.categoryDescription__column p{
+
+.categoryDescription__column p {
   font-size: 25px;
 }
-.categoryDescription__hr{
+
+.categoryDescription__hr {
   width: 90%;
 }
-.Content {
 
-padding-top: 45px;
-padding-bottom: 100px;
+.Content {
+  padding-top: 45px;
+  padding-bottom: 100px;
 }
 
 .btn-dark {
-background-color: #000000;
-color: #ffffff;
+  background-color: #000000;
+  color: #ffffff;
 }
 
 .btn-dark:hover {
-color: #ee13a9;
+  color: #ee13a9;
 }
 
 /*cooperation*/
 
 .form_ref a {
-  color : #000000 ;
+  color: #000000;
 }
 
-.form_ref  a:hover{
-  color: #ee13a9 ;
+.form_ref a:hover {
+  color: #ee13a9;
+}
+
+/*contacts*/
+.map img {
+  width: 600px;
+  height: 600px;
+  border: 1px solid ;
 }
 
 /* CardMask */
+
 .overCard {
   position: relative;
   z-index: 50001;
 }
-.cardMask{
+
+.cardMask {
   width: 100%;
   height: 100%;
   position: absolute;
@@ -161,16 +182,18 @@ color: #ee13a9;
   align-items: center;
   opacity: 0;
   cursor: pointer;
-
   transition: opacity 200ms ease-in-out 0s;
 }
-.price::after{
+
+.price::after {
   content: "  руб.\\кг";
 }
-.cardMask__text{
+
+.cardMask__text {
   font-size: 50px;
 }
-.cardMask__link{
+
+.cardMask__link {
   width: 100%;
   height: 100%;
   position: absolute;
@@ -178,10 +201,10 @@ color: #ee13a9;
   left: 0;
   background: transparent;
 }
-.cardMaskHandler:hover .cardMask{
+
+.cardMaskHandler:hover .cardMask {
   opacity: 1;
 }
-
 
 /*footer*/
 
@@ -191,8 +214,8 @@ color: #ee13a9;
   bottom: 0;
   width: 100%;
   background: #000000;
-  margin:0;
-  padding-top:10px;
+  margin: 0;
+  padding-top: 10px;
   text-align: center;
 }
 
@@ -215,44 +238,51 @@ color: #ee13a9;
 }
 
 /* ProductView style */
-.preInfo{
+
+.preInfo {
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
 }
-.preInfo h3{
+
+.preInfo h3 {
   font-size: 40px;
 }
-.preInfo h3::after{
+
+.preInfo h3::after {
   content: "  руб.\\кг";
 }
-.contentpart-name{
+
+.contentpart-name {
   padding: 30px 0;
   padding-top: 50px;
   color: #af0aaf;
 }
-.contentpart-description{
+
+.contentpart-description {
   padding: 30px 0;
   font-size: 22px;
 }
 
-
 /* FeedBack Form Styling */
-.feedbackForm__title{
+
+.feedbackForm__title {
   margin-top: 20px;
 }
-.feedbackForm__text{
+
+.feedbackForm__text {
   font-size: 22px;
   margin: 20px 0;
 }
-.feedbackForm__text-big{
+
+.feedbackForm__text-big {
   font-size: 30px;
   font-weight: bold;
 }
 
 .input-group {
-  margin-top:10px;
+  margin-top: 10px;
 }
 
 .input-group-prepend {
@@ -260,12 +290,11 @@ color: #ee13a9;
 }
 
 .input-group-text {
-  background : rgba(#000000, 0.51) ;
+  background: rgba(#000000, 0.51);
   border-radius: 0px;
   color: #3b3b3b;
-  width:100%;
- }
-
+  width: 100%;
+}
 
 .form-control {
   border-radius: 0px;
@@ -276,14 +305,15 @@ color: #ee13a9;
   box-shadow: inset 0 1px 1px rgba(#000000, 0.07), 0 0 8px rgba(#af0aaf, 0.6);
 }
 
- textarea {
+textarea {
   resize: none;
 }
 
-.feedbackForm{
+.feedbackForm {
   max-width: 500px;
   margin: auto;
 }
+
 .feedbackForm__button-submit-purple {
   position: relative;
   padding: 5px 20px;
@@ -299,9 +329,9 @@ color: #ee13a9;
   color: #eee;
   top: 0;
   left: 0;
-
   transition: all 70ms linear 0s;
 }
+
 .feedbackForm__button-submit-purple:active {
   background: #820a82;
   top: 4px;
