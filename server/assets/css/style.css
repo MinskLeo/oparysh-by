@@ -135,6 +135,15 @@ color: #ffffff;
 color: #ee13a9;
 }
 
+/*cooperation*/
+
+.form_ref a {
+  color : #000000 ;
+}
+
+.form_ref  a:hover{
+  color: #ee13a9 ;
+}
 
 /* CardMask */
 .overCard {

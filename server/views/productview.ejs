@@ -19,7 +19,6 @@
 
 <body>
 
-
   <div class="wrap">
     <div class="container-fluid">
       <div class="Header row">
@@ -44,7 +43,7 @@
           <div class="drop_h">
             <% for(let i=0;i<categories.length;i++){ %>
 
-              <a href= <%=( "/catalog/" + categories[i].link) %> ><%= categories[i].name %></a>
+              <a href=< %=( "/catalog/" + categories[i].link) %> ><%= categories[i].name %></a>
               <% } %>
 
           </div>
@@ -57,34 +56,33 @@
 
       <!-- DEBUG block - content part -->
       <div class="content footer_p">
-      <% if(product) {%>
-        <!-- name (padding-top a lot) -->
-        <!-- image (left) -->
-        <!-- right (1 row) category -->
-        <!-- right (2 row) price -->
-        <!-- description -->
-        <!--  -->
+        <% if(product) {%>
+          <!-- name (padding-top a lot) -->
+          <!-- image (left) -->
+          <!-- right (1 row) category -->
+          <!-- right (2 row) price -->
+          <!-- description -->
+          <!--  -->
 
           <div class="row contentpart-name">
             <!-- name -->
-            <div class="col-md-12 text-center"><h3><%= product.name %></h3></div>
+            <div class="col-md-12 text-center">
+              <h3><%= product.name %></h3></div>
           </div>
 
           <!-- pre-description (image, price, category) -->
           <div class="container Content">
             <div class="row">
 
-
               <!-- image -->
               <div class="col-md-6">
-                <img src=<%= product.image %> alt="#" class="img-thumbnail rounded">
+                <img src=<%=p roduct.image %> alt="#" class="img-thumbnail rounded">
               </div>
 
               <div class="col-md-6 preInfo">
-                  <!-- price -->
+                <!-- price -->
                 <h3><%= product.price %></h3>
               </div>
-
 
             </div>
 
@@ -94,36 +92,38 @@
           <div class="container contentpart-description">
             <div class="row">
               <div class="col-md-12">
-                <p class="text-center"><%= product.description %></p>
+                <p class="text-center">
+                  <%= product.description %>
+                </p>
               </div>
             </div>
           </div>
-        </div>
+      </div>
 
       <% } %>
 
-  <div class="Footer row">
-    <div class="col-md-2">
-      <a href="#">
+        <div class="Footer row">
+          <div class="col-md-2">
+            <a href="#">
           <i class="fas fa-rss"></i>
         </a>
-      <a href="mailto:info@oparysh.by">
+            <a href="mailto:info@oparysh.by">
           <i class="fas fa-envelope"></i>
         </a>
-      <a href="https://vk.com/club126284612">
+            <a href="https://vk.com/club126284612">
           <i class="fab fa-vk"></i>
         </a>
-      <a href="#">
+            <a href="#">
           <i class="fab fa-facebook-f"></i>
         </a>
+          </div>
+          <div class="col-md-8">
+            <p>БелАгроБиоТехнологии ©2018</p>
+          </div>
+          <div class="col-md-2"></div>
+        </div>
     </div>
-    <div class="col-md-8">
-      <p>БелАгроБиоТехнологии ©2018</p>
-    </div>
-    <div class="col-md-2"></div>
-  </div>
-  </div>
-  <script type="text/javascript" src="/js/scripts.js"></script>
+    <script type="text/javascript" src="/js/scripts.js"></script>
 </body>
 
 </html>
