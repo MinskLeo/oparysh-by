@@ -88,8 +88,21 @@ app.get('*', (req, res, next) => {
 
 
 app.get('/',  (req, res) => {
+
+
   CategoriesDatabaseSelection().then( (value)=>{
-    res.render("index", { categories: value });
+    fs.readdir('./assets/ProductImages',(err,files)=>{
+      let images = [];
+      for (let i = 0; i < 3; i++) {
+        let randomIndex = Math.floor(Math.random() * (files.length-1 - 0 + 1)) + 0;
+        images.push(files[randomIndex]);
+      }
+      console.log(images);
+      res.render("index", { categories: value, images: images });
+    });
+    
+    
+    
   });
 
 
@@ -569,6 +582,21 @@ app.post('/admin/getformdatapages', (req, res) => {
     res.send({
       availablePages: availablePages
     });
+  });
+});
+
+app.post('/newFormData', (req, res) => {
+  let newForm = new FormData({
+    name:req.body.name,
+    phone:req.body.phone,
+    email:req.body.email,
+    message:req.body.message,
+    dateOfReg:Date.now(),
+    dateFinal: null,
+    status: "opened"
+  });
+  newForm.save( ()=>{
+    res.send("OK!");
   });
 });
 

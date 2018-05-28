@@ -14,6 +14,8 @@
   <!-- Bootstrap end -->
 
   <link rel="stylesheet" type="text/css" href="/css/style.css">
+
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
   <title>Наживки, купить наживку для рыбалки оптом Минск </title>
 </head>
 
@@ -44,7 +46,7 @@
           <div class="drop_h">
             <% for(let i=0;i<categories.length;i++){ %>
 
-              <a href=< %=( "/catalog/" + categories[i].link) %> ><%= categories[i].name %></a>
+              <a href=<%=( "/catalog/" + categories[i].link) %> ><%= categories[i].name %></a>
               <% } %>
 
           </div>
@@ -118,11 +120,11 @@
 
             <div class="form-group">
               <label for="formTextArea1">Сообщение (не обязательно)</label>
-              <textarea class="form-control" id="formTextArea1" rows="3" autocomplete="false"></textarea>
+              <textarea class="form-control" id="formMessage" rows="3" autocomplete="false"></textarea>
             </div>
           </div>
 
-          <button class="feedbackForm__button-submit-purple">Отправить</button>
+          <button class="feedbackForm__button-submit-purple" id="submitBtn">Отправить</button>
         </div>
       </div>
     </div>
@@ -148,6 +150,7 @@
     </div>
   </div>
   <script type="text/javascript" src="/js/scripts.js"></script>
+  <script type="text/javascript" src="/js/sendForm.js"></script>
 </body>
 
 </html>
