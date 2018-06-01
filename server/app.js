@@ -8,6 +8,7 @@ const app = express();
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const fs = require('fs');
+// const sql = require ('mysql');
 
 // Multer
 var multer = require('multer');
@@ -79,6 +80,22 @@ const CategoriesDatabaseSelection = async () => {
   return await resultData;
 }
 
+//sql
+/*
+var con = mysql.createConnection({
+  host: "localhost",
+  user: "root",
+  password: "",
+  database: "opatysh"
+});
+
+con.connect((err) => {
+  if (err) throw err;
+  console.log("Connected!");
+  });
+});
+*/
+
 // SETUP ENDED
 
 app.get('*', (req, res, next) => {
@@ -100,9 +117,9 @@ app.get('/',  (req, res) => {
       console.log(images);
       res.render("index", { categories: value, images: images });
     });
-    
-    
-    
+
+
+
   });
 
 
@@ -160,6 +177,26 @@ app.get('/catalog/\*\/', (req, res) => {
 
   // Открытая категория
   if(splitted.length==3){
+    /*
+    con.connect(function(err) {
+      if (err) throw err;
+      var sql = "SELECT link FROM category WHERE link = splited[2]";
+      con.query(sql, function (err, result) {
+        if (err) throw err
+        else {
+        categoryInfo.name = category[0].name;
+        categoryInfo.description = category[0].description;
+      };
+
+      var sql = "SELECT category FROM product WHERE product = splited[2]";
+      con.query(sql, function (err, result) {
+        if (err || result.length == 0) {throw err;   res.render('error', { error: error, categories: value });}
+        else {
+        res.render('catalog', { items: result, categories: value, categoryInfo: categoryInfo });
+      }
+      });
+    });
+    */
       Category.find({ link: splitted[2] },(error,category)=>{
         console.log(category);
         console.log("1. cat");
@@ -283,6 +320,31 @@ app.post('/admin/delcategory', (req, res) => {
   };
 
   console.log("Delete route!");
+
+/*
+con.connect( (err) => {
+  if (err) throw err;
+  if(req.body.id){
+  let sql = "DELETE FROM category WHERE id =  req.body.id" ;
+  con.query(sql,(err, result) => {
+    if (err) {
+      throw err;
+    }
+    else {
+    resultObj = {
+      success: true,
+      categories: result_find
+    }
+    res.send(resultObj);
+   };
+  };
+} else {
+  res.send(resultObj);
+}
+  });
+});
+*/
+
   if(req.body.id){
     Category.find({ _id: req.body.id }).remove().exec( (err_delete) => {
       if (!err_delete){
