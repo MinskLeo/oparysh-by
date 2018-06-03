@@ -69,6 +69,15 @@ a:hover {
   display: none;
 }
 
+#toggle {
+  display: none;
+}
+
+.M_nav_bar a {
+  color: #ffffff;
+  font-size: 20pt;
+}
+
 .M_nav_bar {
   display: none;
   color: #ffffff;
