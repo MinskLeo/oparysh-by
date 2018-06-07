@@ -22,10 +22,7 @@
 
   <div class="wrap">
     <div class="container-fluid">
-      <div class="Header row">
-        <a href="/"><img src="/images/logo.png"></a>
-      </div>
-
+<% include partials/header %>
       <div class="M_nav_bar row">
         <input type="checkbox" name="toggle" id="m_btn" class="Toggle_m">
         <label for="m_btn">
@@ -33,29 +30,16 @@
         </label>
       </div>
 
-      <div class="Nav_bar row">
-        <div class="col-md-1 "></div>
-        <a href="/company" class="col-md-2 ">О компании</a>
-        <a href="/cooperation" class="col-md-2 ">Cотрудничество</a>
-
-
-        <div class="col-md-2" id="catalog">
-          <a href="#">Каталог</a>
-          <div class="drop_h">
-            <% for(let i=0;i<categories.length;i++){ %>
-
-              <a href= <%=( "/catalog/" + categories[i].link) %> ><%= categories[i].name %></a>
-              <% } %>
-
-          </div>
-        </div>
-
-        <a href="#" class="col-md-2 ">Контакты</a>
-        <a href="#" class="col-md-2 ">Где купить</a>
-        <div class="col-md-1"></div>
-      </div>
 
       <!-- DEBUG block - content part -->
+      <div class="content">
+        <% if(product) {%>
+          <!-- name (padding-top a lot) -->
+          <!-- image (left) -->
+          <!-- right (1 row) category -->
+          <!-- right (2 row) price -->
+          <!-- description -->
+          <!--  -->
 
       <% if(product) {%>
         <!-- name (padding-top a lot) -->
@@ -103,31 +87,11 @@
         
 
 
+        </div>
+            <% include partials/footer %>
+    </div>
 
-      <% } %>
-      
-  <div class="Footer row">
-    <div class="col-md-2">
-      <a href="#">
-          <i class="fas fa-rss"></i>
-        </a>
-      <a href="mailto:info@oparysh.by">
-          <i class="fas fa-envelope"></i>
-        </a>
-      <a href="https://vk.com/club126284612">
-          <i class="fab fa-vk"></i>
-        </a>
-      <a href="#">
-          <i class="fab fa-facebook-f"></i>
-        </a>
-    </div>
-    <div class="col-md-8">
-      <p>БелАгроБиоТехнологии ©2018</p>
-    </div>
-    <div class="col-md-2"></div>
-  </div>
-  </div>
-  <script type="text/javascript" src="/js/scripts.js"></script>
+    <script type="text/javascript" src="/js/scripts.js"></script>
 </body>
 
 </html>
