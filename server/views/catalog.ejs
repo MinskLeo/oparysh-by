@@ -58,7 +58,7 @@
       <!-- DEBUG trying to render Description -->
       <div class="Content">
 
-      
+
       <% if(categoryInfo) {%>
         <div class="row categoryDescription">
           <div class="col-md-12 text-center categoryDescription__column">
@@ -73,9 +73,9 @@
             </div>
           </div>
         </div>
-        
 
-        
+
+
         <div class="row categoryDescription">
           <div class="col-md-12 text-center categoryDescription__column">
             <hr class="categoryDescription__hr">
@@ -99,7 +99,7 @@
 
 
                 <div class="card cardMask">
-                  
+
                   <p class="cardMask__text price"><%= items[i].price %></p>
                 </div>
 
@@ -108,42 +108,19 @@
 
         <% if(counter===2){ %>
           </div>
-        <%}%> 
+        <%}%>
 
         <% if(counter===2){ %>
           </div>
           <%counter=0%>
         <%}else{%>
           <%counter++%>
-        <%}%> 
-              
+        <%}%>
+
       <% } %>
 
      </div>
-
-  
-  <div class="Footer row">
-    <div class="col-md-2">
-      <a href="#">
-          <i class="fas fa-rss"></i>
-        </a>
-      <a href="mailto:info@oparysh.by">
-          <i class="fas fa-envelope"></i>
-        </a>
-      <a href="https://vk.com/club126284612">
-          <i class="fab fa-vk"></i>
-        </a>
-      <a href="#">
-          <i class="fab fa-facebook-f"></i>
-        </a>
-    </div>
-    <div class="col-md-8">
-      <p>БелАгроБиоТехнологии ©2018</p>
-    </div>
-    <div class="col-md-2"></div>
-  </div>
-  </div>
-
+         <% include partials/footer %>
   </div>
   <script type="text/javascript" src="/js/scripts.js"></script>
 </body>
