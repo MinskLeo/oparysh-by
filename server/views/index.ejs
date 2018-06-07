@@ -22,9 +22,6 @@
 
   <div class="wrap">
     <div class="container-fluid">
-      <div class="Header row">
-        <a href="/"><img src="/images/logo.png"></a>
-      </div>
 
       <div class="M_nav_bar row">
         <input type="checkbox" name="toggle" id="m_btn" class="Toggle_m">
@@ -33,27 +30,7 @@
         </label>
       </div>
 
-      <div class="Nav_bar row">
-        <div class="col-md-1 "></div>
-        <a href="/company" class="col-md-2 ">О компании</a>
-        <a href="/cooperation" class="col-md-2 ">Cотрудничество</a>
-
-
-        <div class="col-md-2" id="catalog">
-          <a href="#">Каталог</a>
-          <div class="drop_h">
-            <% for(let i=0;i<categories.length;i++){ %>
-
-              <a href=<%=( "/catalog/" + categories[i].link) %> ><%= categories[i].name %></a>
-              <% } %>
-
-          </div>
-        </div>
-
-        <a href="/contacts" class="col-md-2 ">Контакты</a>
-        <a href="/buy" class="col-md-2 ">Где купить</a>
-        <div class="col-md-1"></div>
-      </div>
+<% include partials/header %>
 
       <div class="Content row" style="padding-top:0px">
         <div class="col-md-2"></div>

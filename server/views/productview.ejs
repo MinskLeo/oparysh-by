@@ -21,10 +21,7 @@
 
   <div class="wrap">
     <div class="container-fluid">
-      <div class="Header row">
-        <a href="/"><img src="/images/logo.png"></a>
-      </div>
-
+<% include partials/header %>
       <div class="M_nav_bar row">
         <input type="checkbox" name="toggle" id="m_btn" class="Toggle_m">
         <label for="m_btn">
@@ -32,30 +29,9 @@
         </label>
       </div>
 
-      <div class="Nav_bar row ">
-        <div class="col-md-1 "></div>
-        <a href="/company" class="col-md-2 ">О компании</a>
-        <a href="/cooperation" class="col-md-2 ">Cотрудничество</a>
-
-
-        <div class="col-md-2" id="catalog">
-          <a href="#">Каталог</a>
-          <div class="drop_h">
-            <% for(let i=0;i<categories.length;i++){ %>
-
-              <a href=< %=( "/catalog/" + categories[i].link) %> ><%= categories[i].name %></a>
-              <% } %>
-
-          </div>
-        </div>
-
-        <a href="#" class="col-md-2 ">Контакты</a>
-        <a href="#" class="col-md-2 ">Где купить</a>
-        <div class="col-md-1"></div>
-      </div>
 
       <!-- DEBUG block - content part -->
-      <div class="content footer_p">
+      <div class="content">
         <% if(product) {%>
           <!-- name (padding-top a lot) -->
           <!-- image (left) -->
