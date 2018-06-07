@@ -109,7 +109,7 @@ class ChangeDataWindow extends Component{
                       {categoriesSelectRendered}
                     </ul>
                   </div>
-                  <textarea cols="30" rows="5" className="form__text" placeholder="Описание" defaultValue={this.state.productDescription} ref={input => this.DescrtiptionField = input}></textarea>
+                  <textarea cols="30" rows="5" className="form__text" placeholder="Описание" defaultValue={this.state.productDescription} ref={input => this.DescrtiptionField = input} style={{resize: 'none'}}></textarea>
                     <div className="row row-100 row-flex row-column">
                       <label className="form__button form__button-fileinput" htmlFor="fileInput">Выбрать файл</label>
                       <input id="fileInput" style={{display:"none"}} type="file" accept=".png, .jpg, .jpeg"  ref={input => this.FileField = input} onChange={this.FileSelectionChanged}/>

@@ -19,11 +19,10 @@
 
 <body>
 
+
   <div class="wrap">
     <div class="container-fluid">
-      
-    <% include partials/header %>
-
+<% include partials/header %>
       <div class="M_nav_bar row">
         <input type="checkbox" name="toggle" id="m_btn" class="Toggle_m">
         <label for="m_btn">
@@ -31,52 +30,67 @@
         </label>
       </div>
 
-      
 
       <!-- DEBUG block - content part -->
-      <div class="Content">
+      <div class="content">
         <% if(product) {%>
+          <!-- name (padding-top a lot) -->
+          <!-- image (left) -->
+          <!-- right (1 row) category -->
+          <!-- right (2 row) price -->
+          <!-- description -->
+          <!--  -->
 
-          <div class="row contentpart-name">
-            <!-- name -->
-            <div class="col-md-12 text-center">
-              <h3><%= product.name %></h3></div>
-          </div>
+      <% if(product) {%>
+        <!-- name (padding-top a lot) -->
+        <!-- image (left) -->
+        <!-- right (1 row) category -->
+        <!-- right (2 row) price -->
+        <!-- description -->
+        <!--  -->
 
-          <!-- pre-description (image, price, category) -->
-          <div class="container Content">
-            <div class="row">
 
-              <!-- image -->
-              <div class="col-md-6">
-                <img src=<%= product.image %> alt="#" class="img-thumbnail rounded">
-              </div>
+        
+        <div class="row contentpart-name">
+          <!-- name -->
+          <div class="col-md-12 text-center"><h3><%= product.name %></h3></div>
+        </div>
 
-              <div class="col-md-6 preInfo">
+        <!-- pre-description (image, price, category) -->
+        <div class="container">
+          <div class="row">
+          
+
+            <!-- image -->
+            <div class="col-md-6">
+              <img src=<%= product.image %> alt="#" class="img-thumbnail rounded">
+            </div>
+            
+            <div class="col-md-6 preInfo">
                 <!-- price -->
-                <h3><%= product.price %></h3>
-              </div>
-
+              <h3><%= product.price %></h3>
             </div>
 
-            <!-- description -->
-          </div>
 
-          <div class="container contentpart-description">
-            <div class="row">
-              <div class="col-md-12">
-                <p class="text-center">
-                  <%= product.description %>
-                </p>
-              </div>
+          </div>
+          
+          <!-- description -->
+        </div>
+
+        <div class="container contentpart-description">
+          <div class="row">
+            <div class="col-md-12">
+              <p class="text-center"><%= product.description %></p>
             </div>
           </div>
-      </div>
+        </div>
+        
 
-      <% } %>
 
-        <% include partials/footer %>
+        </div>
+            <% include partials/footer %>
     </div>
+
     <script type="text/javascript" src="/js/scripts.js"></script>
 </body>
 
