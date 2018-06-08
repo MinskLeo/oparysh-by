@@ -1,16 +1,13 @@
 $("document").ready(() => {
-  const toggle = $('#toggle');
   const checkbox = $("#m_btn");
+  console.log(checkbox);
+  checkbox.change(function() {
 
-  checkbox.change((event) => {
-      var checkbox = event.target;
-      if (checkbox.checked) {
-          //Checkbox has been checked
-          toggle.show() ;
+       if (checkbox.prop( "checked" ) == true) {
+        $('#toggle').show("slow");
       } else {
-          //Checkbox has been unchecked
-          toggle.hide() ;
-      }
-  });
+        $('#toggle').hide("slow");
+      };
 
- });
+    });
+});
