@@ -1,0 +1,46 @@
+/*new nav bar */
+
+.Nav_bar_m {
+  background-color: #eee;
+  position: relative;
+}
+
+
+.Nav_bar_m nav{
+  width:100%;
+  background-color: #000000;
+  transform:scale(1, 0);
+  transform-origin: top;
+  transition: transform 250ms ease-in-out 250ms;
+}
+
+.Nav_bar_m ul{
+  margin: 0;
+}
+
+.Nav_bar_m a {
+  color: #f2f2f2;
+  text-align: center;
+  text-decoration: none;
+  font-size: 17px;
+  width: 100%;
+  opacity: 0;
+}
+
+.Nav_bar_m li{
+  list-style: none;
+    color: #e7e7e7;
+}
+
+.Nav_bar_m li:hover {
+  background-color: #292929;
+  color: #ee13a9;
+}
+
+.nav_toggle:checked ~ nav {
+  transform: scale(1,1);
+}
+
+.nav_toggle:checked ~ nav a {
+  opacity: 1;
+}

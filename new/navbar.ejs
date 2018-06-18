@@ -1,0 +1,20 @@
+<div class="Nav_bar_m row">
+    <input type="checkbox" class="nav_toggle">
+      <nav>
+        <ul>
+          <li><a href="/company">О компании</a></li>
+          <li><a href="/cooperation">Cотрудничество</a></li>
+          <li>
+            <ul>
+                  <% for(let i=0;i<categories.length;i++){ %>
+                  <li>
+                  <a href=<%=( "/catalog/" + categories[i].link) %> ><%= categories[i].name %></a>
+                  <% } %></li>
+            </ul>
+          </li>
+          <li><a href="/contacts">Контакты</a></li>
+          <li><a href="/buy" >Где купить</a></li>
+        </ul>
+      </nav>
+    </div>
+  </div>
