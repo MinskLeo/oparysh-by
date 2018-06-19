@@ -5,12 +5,15 @@
 
 # dependencies
 /admin-panel/node_modules
+/vue-admin-panel/client/node_modules
+/vue-admin-panel/server/node_modules
 
 # testing
 /admin-panel/coverage
 
 # production
 /admin-panel/build
+/vue-admin-panel/client/dist
 
 # misc
 /admin-panel/.DS_Store

@@ -1,0 +1,25 @@
+vue => 
+
+
+req
+{
+  нажатые_кнопки: [],
+  выбранный_тип: String,
+  page: Number
+}
+
+res
+{
+  items: [15],
+  pages: Number
+}
+
+created () {
+  axios => 
+  {
+    нажатые_кнопки: [],
+    выбранный_тип: String,
+    page: 1
+  }
+  if(page)
+}

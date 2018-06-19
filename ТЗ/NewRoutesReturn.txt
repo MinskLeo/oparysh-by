@@ -1,0 +1,157 @@
+﻿
+FUNCTIONS:
+  1) (async) CategoriesDatabaseSelection
+  -- Возвращает массив с категорями
+  (Вообще то промис, ну да ладно)
+
+*******************
+
+
+ROUTES:
+
+GET:
+1) /catalog/\*\/
+
+splitted[2] - категория (link поле из коллекции categories)
+splitted[3] - id товара (_id поле яиз коллекции products)
+
+Тут надо сделать выборку только по категории (в первом случае) или выборку по категории и id товара (во втором случае). Рассмотри сам роут
+
+*****
+SELECT * FROM Category ; 
+//Или если нужно сделать выборку без повторений 
+SELECT DISTINCT field FROM Category ; 
+// ну тут короче поле с ключем нужно добавить в категории по полю _ID (связать ID товара и категорию в которой он лежит)
+SELECT * FROM Category WHERE key = _id ;
+*****
+
+
+GET (ADMIN ROUTES):
+
+2) /admin/getcategories
+-- Выборка всех категорий и отправка их в виде массива
+
+*****
+SELECT DISTINCT field FROM Category ; 
+//или если категории в таблице уникальны 
+SELECT * FROM Category ; 
+*****
+
+POST (ADMIN ROUTES):
+3) /admin/getcatalog
+-- Выборка из каталога в зависимости от переменной category
+
+  1. category == 'all' => Выбрать все товары и отправить
+  2. иначе => Выбрать все товары с категорией значения переменной category 
+
+*****	
+1. SELECT * FROM Category ; 
+2. SELECT * FROM Items WHERE item_category = value ;
+
+//Item - таблица продуктов
+*****
+
+4) /admin/delcategory
+-- Удаление категории с переданным id
+(значение в req.body._id)
+
+// у категории не может быть ID придумай нормальное название (SQL по пи*** все пустит)
+*****
+DELETE FROM Category WHERE _ID = req.body._id;
+*****
+
+
+5) /admin/setcategory
+-- Обновление данных таблицы с категориями
+
+requestData - объект, который содержит все поля с данными, которые необходимо обновить
+{
+  _id: ...,
+  name: ...,
+  link: ...,
+  description: ...
+}
+Заменяем строчку с данными с id === requestData._id на те данные, что находятся в объекте requestData
+// ты нашел этот вариант вроде 
+
+
+6) /admin/newcategory
+-- Создание новой категории
+Объект requestData содержит данные, которые надо сохранить в БД.
+Взять данные их объекта и сохранить в БД.
+//тоже в документации есть 
+
+
+7) /admin/setproduct
+-- Обновление данных таблицы товары (products)
+req.body содержит все что надо:
+
+
+req.body: 
+{
+  name,
+  category,
+  price,
+  description,
+  _id
+}
+Так же req.file МОЖЕТ содержать файл (а может и нет)
+Файл присутствует:
+  Замена всех полей из body + поле image на
+  "http://localhost:8080/ProductImages/" + req.file.filename
+
+Файл отсутствует:
+  Замена всех полей из body. image оставить без изменений
+
+//документация 
+
+
+8) /admin/deleteproduct
+-- Удаление записи из таблицы с товарами (products) по полученному id (req.body._id)
+
+//уже писал что id нельзя сувать куда угодно (можешь назвать чет типо Item_id)
+//нужно переделать так все что ты решил назвать ID в категориях вообще зачем нам ID ? 
+//можно просто по названию категории делать поиск 
+*****
+DELETE FROM Items WHERE _ID = req.body._id;
+*****
+
+
+9) /admin/newproduct
+-- Создание новой записи в таблице с товарами
+
+Если файл присутствует (req.file) => поле image:
+  "http://localhost:8080/ProductImages/" + req.file.filename;
+иначе оставить пустым
+//ты хочешь запихнуть объект так что читай документацию
+
+
+10) /admin/getformdata
+-- Выборка данных отфильтрованных кнопками в админ панели
+Произвести выборку данных форм в зависимости от значений в массиве.
+Массив с данными сформировать в заивисмости от
+req.body.done
+req.body.opened
+req.body.canceled
+
+//это логика клиента
+//можно просто сделать выборку всего 
+//и на клиенте обработать 
+//кластерфак с аяксами уже был и он не оч работал так что на клиенте лучше  обрабатывать
+//нехер данные по сети гонять  
+
+11) /admin/setformdata
+-- Обновление статуса у заказа 
+req.body._id
+req.body.status
+
+UPDATE FormData SET = "req.body._id" WHERE _id ;
+UPDATE FormData SET = "req.body.status" WHERE status ;
+//поять же про ID
+
+
+11) /admin/getformdatapages
+Позже допишу
+
+12) /newFormData
+Позже допишу
